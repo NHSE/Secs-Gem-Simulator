@@ -30,4 +30,5 @@ public slots:
     void connectToEquipment();
     void DisconnectToEquipment();
     void StateChange(QString State);
+    void onSocketError(QAbstractSocket::SocketError error);
 };

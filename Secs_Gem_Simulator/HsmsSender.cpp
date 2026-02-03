@@ -1,4 +1,5 @@
 #include "HsmsSender.h"
+#include "Logger.h"
 
 HsmsSender::HsmsSender(ISocket* socket, QObject* parent)
     : QThread(parent), socket(socket)
@@ -19,7 +20,14 @@ bool HsmsSender::InsertMsgQue(QByteArray &msg)
     MsgQue.enqueue(msg);
     cond.wakeOne();
 
-    emit setValue("Connect");
+    if (msg[6] == char(0x00)) // 0 : Control Msg, 0 < : Data Msg
+    {
+        Logger::instance()->getLog(msg);
+    }
+    else
+    {
+
+    }
 
     return true;
 }

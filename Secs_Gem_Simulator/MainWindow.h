@@ -2,6 +2,7 @@
 
 #include "ui_MainWindow.h"
 #include "HsmsClient.h"
+#include "Logger.h"
 
 #include <QtWidgets/QMainWindow>
 
@@ -20,5 +21,6 @@ private:
 private slots :
     void TcpIpConnect();
     void SetConnectState(QString State);
+    void Logging_SecsMsg(QString Msg);
 };
 

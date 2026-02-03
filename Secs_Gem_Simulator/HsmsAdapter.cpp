@@ -8,16 +8,18 @@ qint64 HsmsAdapter::write(const QByteArray& data) {
     return socket->write(data);
 }
 
-/*
-void HsmsAdapter::read() {
+
+QByteArray HsmsAdapter::readAll() {
     QByteArray msg = socket->readAll();
 
     if (!msg.isEmpty())
     {
-        //emit readData(msg);
+        return msg;
     }
+
+    return QByteArray();
 }
-*/
+
 
 bool HsmsAdapter::isConnected() const {
     return socket->state() == QAbstractSocket::ConnectedState;

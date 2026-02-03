@@ -7,7 +7,7 @@ public:
     explicit HsmsAdapter(QTcpSocket* socket);
 
     qint64 write(const QByteArray& data) override;
-    //void read() override;
+    QByteArray readAll() override;
     bool isConnected() const override;
 
 private:

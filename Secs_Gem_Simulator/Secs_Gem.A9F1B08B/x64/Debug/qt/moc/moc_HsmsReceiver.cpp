@@ -21,8 +21,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_HsmsReceiver_t {
-    QByteArrayData data[7];
-    char stringdata0[57];
+    QByteArrayData data[5];
+    char stringdata0[41];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -35,13 +35,10 @@ QT_MOC_LITERAL(0, 0, 12), // "HsmsReceiver"
 QT_MOC_LITERAL(1, 13, 8), // "setValue"
 QT_MOC_LITERAL(2, 22, 0), // ""
 QT_MOC_LITERAL(3, 23, 5), // "State"
-QT_MOC_LITERAL(4, 29, 11), // "onReadyRead"
-QT_MOC_LITERAL(5, 41, 11), // "QByteArray&"
-QT_MOC_LITERAL(6, 53, 3) // "msg"
+QT_MOC_LITERAL(4, 29, 11) // "onReadyRead"
 
     },
-    "HsmsReceiver\0setValue\0\0State\0onReadyRead\0"
-    "QByteArray&\0msg"
+    "HsmsReceiver\0setValue\0\0State\0onReadyRead"
 };
 #undef QT_MOC_LITERAL
 
@@ -62,13 +59,13 @@ static const uint qt_meta_data_HsmsReceiver[] = {
        1,    1,   24,    2, 0x06 /* Public */,
 
  // slots: name, argc, parameters, tag, flags
-       4,    1,   27,    2, 0x08 /* Private */,
+       4,    0,   27,    2, 0x08 /* Private */,
 
  // signals: parameters
     QMetaType::Void, QMetaType::QString,    3,
 
  // slots: parameters
-    QMetaType::Void, 0x80000000 | 5,    6,
+    QMetaType::Void,
 
        0        // eod
 };
@@ -80,7 +77,7 @@ void HsmsReceiver::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id
         Q_UNUSED(_t)
         switch (_id) {
         case 0: _t->setValue((*reinterpret_cast< QString(*)>(_a[1]))); break;
-        case 1: _t->onReadyRead((*reinterpret_cast< QByteArray(*)>(_a[1]))); break;
+        case 1: _t->onReadyRead(); break;
         default: ;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {
@@ -96,7 +93,7 @@ void HsmsReceiver::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id
 }
 
 QT_INIT_METAOBJECT const QMetaObject HsmsReceiver::staticMetaObject = { {
-    &QThread::staticMetaObject,
+    &QObject::staticMetaObject,
     qt_meta_stringdata_HsmsReceiver.data,
     qt_meta_data_HsmsReceiver,
     qt_static_metacall,
@@ -115,12 +112,12 @@ void *HsmsReceiver::qt_metacast(const char *_clname)
     if (!_clname) return nullptr;
     if (!strcmp(_clname, qt_meta_stringdata_HsmsReceiver.stringdata0))
         return static_cast<void*>(this);
-    return QThread::qt_metacast(_clname);
+    return QObject::qt_metacast(_clname);
 }
 
 int HsmsReceiver::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
 {
-    _id = QThread::qt_metacall(_c, _id, _a);
+    _id = QObject::qt_metacall(_c, _id, _a);
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {

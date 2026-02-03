@@ -23,3 +23,14 @@ enum class HsmsSType : uint8_t
     RejectReq = 0x07,
     SeparateReq = 0x09
 };
+
+struct HsmsHeader
+{
+    quint16 sessionId;    // Big Endian
+    quint8  stream;       // Stream or 0
+    quint8  function;     // Function or 0
+    bool wBit;            // wait Bit
+    quint8  pType;        // Always 0x00
+    quint8  sType;        // 0 = Data, else Control
+    quint32 systemBytes;  // Transaction ID
+};

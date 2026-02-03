@@ -4,7 +4,12 @@
 
 #include "ISocket.h"
 
-class HsmsReceiver : public QThread {
+#include "Logger.h"
+#include "SecsType.h"
+#include "HsmsEnums.h"
+#include "MsgToSecsMsg.h"
+
+class HsmsReceiver : public QObject {
     Q_OBJECT
 
 public:
@@ -13,10 +18,11 @@ public:
 
 private:
     ISocket* socket;
+    MsgToSecsMsg* msgToSecsMsg;
 
 signals:
     void setValue(QString State);
 
 private slots:
-    void onReadyRead(QByteArray& msg);
+    void onReadyRead();
 };

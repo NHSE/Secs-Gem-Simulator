@@ -19,6 +19,7 @@
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenuBar>
 #include <QtWidgets/QPushButton>
+#include <QtWidgets/QScrollArea>
 #include <QtWidgets/QStatusBar>
 #include <QtWidgets/QTabWidget>
 #include <QtWidgets/QTextBrowser>
@@ -49,7 +50,10 @@ public:
     QTabWidget *tabWidget;
     QWidget *tab;
     QHBoxLayout *horizontalLayout_2;
-    QTextBrowser *textBrowser;
+    QScrollArea *scrollArea;
+    QWidget *scrollAreaWidgetContents;
+    QHBoxLayout *horizontalLayout_7;
+    QTextEdit *tb_SecsMsg;
     QWidget *tab_2;
     QHBoxLayout *horizontalLayout_3;
     QTextBrowser *textBrowser_2;
@@ -63,7 +67,7 @@ public:
     QFrame *frame_3;
     QGridLayout *gridLayout;
     QPushButton *btnOpen;
-    QPushButton *btnClose;
+    QPushButton *btnClos;
     QTextBrowser *textBrowser_3;
     QMenuBar *menuBar;
     QToolBar *mainToolBar;
@@ -149,10 +153,24 @@ public:
         horizontalLayout_2->setSpacing(6);
         horizontalLayout_2->setContentsMargins(11, 11, 11, 11);
         horizontalLayout_2->setObjectName(QString::fromUtf8("horizontalLayout_2"));
-        textBrowser = new QTextBrowser(tab);
-        textBrowser->setObjectName(QString::fromUtf8("textBrowser"));
+        scrollArea = new QScrollArea(tab);
+        scrollArea->setObjectName(QString::fromUtf8("scrollArea"));
+        scrollArea->setWidgetResizable(true);
+        scrollAreaWidgetContents = new QWidget();
+        scrollAreaWidgetContents->setObjectName(QString::fromUtf8("scrollAreaWidgetContents"));
+        scrollAreaWidgetContents->setGeometry(QRect(0, 0, 274, 273));
+        horizontalLayout_7 = new QHBoxLayout(scrollAreaWidgetContents);
+        horizontalLayout_7->setSpacing(6);
+        horizontalLayout_7->setContentsMargins(11, 11, 11, 11);
+        horizontalLayout_7->setObjectName(QString::fromUtf8("horizontalLayout_7"));
+        tb_SecsMsg = new QTextEdit(scrollAreaWidgetContents);
+        tb_SecsMsg->setObjectName(QString::fromUtf8("tb_SecsMsg"));
 
-        horizontalLayout_2->addWidget(textBrowser);
+        horizontalLayout_7->addWidget(tb_SecsMsg);
+
+        scrollArea->setWidget(scrollAreaWidgetContents);
+
+        horizontalLayout_2->addWidget(scrollArea);
 
         tabWidget->addTab(tab, QString());
         tab_2 = new QWidget();
@@ -221,10 +239,10 @@ public:
 
         gridLayout->addWidget(btnOpen, 0, 0, 1, 1);
 
-        btnClose = new QPushButton(frame_3);
-        btnClose->setObjectName(QString::fromUtf8("btnClose"));
+        btnClos = new QPushButton(frame_3);
+        btnClos->setObjectName(QString::fromUtf8("btnClos"));
 
-        gridLayout->addWidget(btnClose, 0, 1, 1, 1);
+        gridLayout->addWidget(btnClos, 0, 1, 1, 1);
 
         textBrowser_3 = new QTextBrowser(frame_3);
         textBrowser_3->setObjectName(QString::fromUtf8("textBrowser_3"));
@@ -260,7 +278,7 @@ public:
 
         retranslateUi(Secs_Gem_SimulatorClass);
 
-        tabWidget->setCurrentIndex(1);
+        tabWidget->setCurrentIndex(0);
 
 
         QMetaObject::connectSlotsByName(Secs_Gem_SimulatorClass);
@@ -276,7 +294,7 @@ public:
         btnConnect->setText(QApplication::translate("Secs_Gem_SimulatorClass", "Connect", nullptr));
         btnDisConnect->setText(QApplication::translate("Secs_Gem_SimulatorClass", "DisConnect", nullptr));
         btnOpen->setText(QApplication::translate("Secs_Gem_SimulatorClass", "Open", nullptr));
-        btnClose->setText(QApplication::translate("Secs_Gem_SimulatorClass", "Close", nullptr));
+        btnClos->setText(QApplication::translate("Secs_Gem_SimulatorClass", "Close", nullptr));
     } // retranslateUi
 
 };

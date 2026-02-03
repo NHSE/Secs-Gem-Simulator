@@ -29,7 +29,7 @@
     <QtRcc Include="Secs_Gem_Simulator.qrc">
       <Filter>Resource Files</Filter>
     </QtRcc>
-    <QtUic Include="ui_MainWindow.ui">
+    <QtUic Include="MainWindow.ui">
       <Filter>Form Files</Filter>
     </QtUic>
     <QtMoc Include="MainWindow.h">
@@ -61,6 +61,12 @@
     <ClCompile Include="HsmsReceiver.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Logger.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MsgToSecsMsg.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="HsmsClient.h">
@@ -70,6 +76,12 @@
       <Filter>Header Files</Filter>
     </QtMoc>
     <QtMoc Include="HsmsReceiver.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="Logger.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="MsgToSecsMsg.h">
       <Filter>Header Files</Filter>
     </QtMoc>
   </ItemGroup>
@@ -87,6 +99,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="HsmsBuilder.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SecsType.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

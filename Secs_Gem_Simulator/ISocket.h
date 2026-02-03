@@ -7,6 +7,6 @@ public:
     virtual ~ISocket() = default;
 
     virtual qint64 write(const QByteArray& data) = 0;
-    //virtual void read();
+    virtual QByteArray readAll() = 0;
     virtual bool isConnected() const = 0;
 };

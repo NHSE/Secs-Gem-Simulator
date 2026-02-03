@@ -14,6 +14,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui.btnOpen, SIGNAL(clicked()), this, SLOT(TcpIpConnect()));
 
     connect(hsmsClient, SIGNAL(setValue(QString)), this, SLOT(SetConnectState(QString)));
+    connect(Logger::instance(), SIGNAL(sendLog(QString)), this, SLOT(Logging_SecsMsg(QString)));
 }
 
 MainWindow::~MainWindow()
@@ -27,4 +28,9 @@ void MainWindow::TcpIpConnect()
 void MainWindow::SetConnectState(QString State)
 {
     ui.lb_State->setText(State);
+}
+
+void MainWindow::Logging_SecsMsg(QString Msg)
+{
+    ui.tb_SecsMsg->append(Msg);
 }
