@@ -20,6 +20,5 @@ Logger::~Logger()
 
 void Logger::getLog(QString Msg)
 {
-
 	emit sendLog(Msg);
 }

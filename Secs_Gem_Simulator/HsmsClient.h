@@ -15,6 +15,8 @@ public:
     explicit HsmsClient(QObject* parent = nullptr);
     ~HsmsClient();
 
+    SmlMessage SendSecsMsg(SmlMessage Msg);
+
 private:
     HsmsBuilder* hsmsBuilder;
     HsmsSender* hsmsSender;

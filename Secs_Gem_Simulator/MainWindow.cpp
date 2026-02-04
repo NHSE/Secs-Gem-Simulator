@@ -1,4 +1,5 @@
-#include "MainWindow.h"
+﻿#include "MainWindow.h"
+
 #include <QFileDialog>
 
 
@@ -8,21 +9,60 @@ MainWindow::MainWindow(QWidget *parent)
     ui.setupUi(this);
 
     hsmsClient = new HsmsClient(this);
+    smlManager = new SmlManager(this);
 
     connect(ui.btnConnect, SIGNAL(clicked()), hsmsClient, SLOT(connectToEquipment()));
     connect(ui.btnDisConnect, SIGNAL(clicked()), hsmsClient, SLOT(DisconnectToEquipment()));
-    connect(ui.btnOpen, SIGNAL(clicked()), this, SLOT(TcpIpConnect()));
+    connect(ui.btnOpen, SIGNAL(clicked()), this, SLOT(btnOpen_Clicked()));
+    connect(ui.btnClos, SIGNAL(clicked()), this, SLOT(btnClose_Clicked()));
 
     connect(hsmsClient, SIGNAL(setValue(QString)), this, SLOT(SetConnectState(QString)));
     connect(Logger::instance(), SIGNAL(sendLog(QString)), this, SLOT(Logging_SecsMsg(QString)));
+
+    ui.lw_MsgList->setContextMenuPolicy(Qt::CustomContextMenu);
+    connect(ui.lw_MsgList, &QListWidget::customContextMenuRequested, this, &MainWindow::onListContextMenu);
+    connect(ui.lw_MsgList, &QListWidget::itemDoubleClicked, this, &MainWindow::onMsgItemDoubleClicked);
 }
 
 MainWindow::~MainWindow()
 {}
 
-void MainWindow::TcpIpConnect()
+void MainWindow::btnOpen_Clicked()
 {
-    QString file_path = QFileDialog::getOpenFileName(this, "open File", "C:/", "File (*.*)");
+    QString path = QFileDialog::getOpenFileName(this, "open File", "C:/", "File (*.sml)");
+
+    QVector<SmlMessage> messages;
+    QString error;
+
+    if (!smlManager->ParseFile(path, messages, error)) {
+        //QMessageBox::critical(this, "Load Failed", error);
+        return;
+    }
+
+    sxfxList.clear();
+    messageMap.clear();
+
+    for (const auto& msg : messages)
+    {
+        SxFx key{ msg.stream, msg.function };
+
+        sxfxList.push_back(key);
+        messageMap.emplace(key, msg);
+
+        ui.lw_MsgList->addItem(
+            QString("S%1F%2%3")
+            .arg(msg.stream)
+            .arg(msg.function)
+            .arg(msg.wbit ? " W" : "")
+        );
+    }
+}
+
+void MainWindow::btnClose_Clicked()
+{
+    sxfxList.clear();
+    messageMap.clear();
+    ui.lw_MsgList->clear();
 }
 
 void MainWindow::SetConnectState(QString State)
@@ -33,4 +73,59 @@ void MainWindow::SetConnectState(QString State)
 void MainWindow::Logging_SecsMsg(QString Msg)
 {
     ui.tb_SecsMsg->append(Msg);
+}
+
+void MainWindow::onListContextMenu(const QPoint& pos)
+{
+    QListWidgetItem* item = ui.lw_MsgList->itemAt(pos);
+    if (!item)
+        return;
+
+    QMenu menu(this);
+    QAction* showAction = menu.addAction("Show");
+
+    QAction* selected = menu.exec(ui.lw_MsgList->viewport()->mapToGlobal(pos));
+    if (selected == showAction) {
+        onShowSml();
+    }
+}
+
+void MainWindow::onShowSml()
+{
+    int row = ui.lw_MsgList->currentRow();
+    if (row < 0 || row >= sxfxList.size())
+        return;
+
+    const SxFx& key = sxfxList[row];
+    const SmlMessage& msg = messageMap.at(key);
+
+    QDialog* dlg = new QDialog(this);
+    dlg->setWindowTitle(
+        QString("S%1F%2 Viewer")
+        .arg(key.stream)
+        .arg(key.function)
+    );
+    dlg->resize(700, 500);
+
+    QTextEdit* edit = new QTextEdit(dlg);
+    edit->setReadOnly(true);
+    edit->setPlainText(msg.fullText);
+
+    QVBoxLayout* layout = new QVBoxLayout(dlg);
+    layout->addWidget(edit);
+    dlg->setLayout(layout);
+
+    dlg->show();
+}
+
+void MainWindow::onMsgItemDoubleClicked(QListWidgetItem* item)
+{
+    int row = ui.lw_MsgList->currentRow();
+    if (row < 0 || row >= sxfxList.size())
+        return;
+
+    const SxFx& key = sxfxList[row];
+    const SmlMessage& msg = messageMap.at(key);
+
+    hsmsClient->SendSecsMsg(msg);
 }

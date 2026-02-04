@@ -84,6 +84,9 @@
     <QtMoc Include="MsgToSecsMsg.h">
       <Filter>Header Files</Filter>
     </QtMoc>
+    <QtMoc Include="SmlManager.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="HsmsEnums.h">
@@ -93,9 +96,6 @@
       <Filter>interface</Filter>
     </ClInclude>
     <ClInclude Include="HsmsAdapter.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="SmlManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="HsmsBuilder.h">

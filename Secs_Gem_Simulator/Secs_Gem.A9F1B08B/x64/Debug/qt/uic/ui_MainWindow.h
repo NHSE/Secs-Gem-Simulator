@@ -16,6 +16,7 @@
 #include <QtWidgets/QGridLayout>
 #include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QLabel>
+#include <QtWidgets/QListWidget>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenuBar>
 #include <QtWidgets/QPushButton>
@@ -37,14 +38,12 @@ public:
     QHBoxLayout *horizontalLayout;
     QFrame *frame_4;
     QVBoxLayout *verticalLayout_2;
-    QFrame *frame_5;
-    QHBoxLayout *horizontalLayout_5;
-    QTextEdit *textEdit;
-    QTextEdit *textEdit_2;
-    QTextEdit *textEdit_3;
     QFrame *frame_6;
     QHBoxLayout *horizontalLayout_6;
     QLabel *lb_State;
+    QTextEdit *textEdit_2;
+    QTextEdit *textEdit;
+    QTextEdit *textEdit_3;
     QFrame *frame_7;
     QHBoxLayout *horizontalLayout_4;
     QTabWidget *tabWidget;
@@ -68,7 +67,7 @@ public:
     QGridLayout *gridLayout;
     QPushButton *btnOpen;
     QPushButton *btnClos;
-    QTextBrowser *textBrowser_3;
+    QListWidget *lw_MsgList;
     QMenuBar *menuBar;
     QToolBar *mainToolBar;
     QStatusBar *statusBar;
@@ -94,35 +93,9 @@ public:
         verticalLayout_2->setSpacing(6);
         verticalLayout_2->setContentsMargins(11, 11, 11, 11);
         verticalLayout_2->setObjectName(QString::fromUtf8("verticalLayout_2"));
-        frame_5 = new QFrame(frame_4);
-        frame_5->setObjectName(QString::fromUtf8("frame_5"));
-        frame_5->setMaximumSize(QSize(16777215, 50));
-        frame_5->setFrameShape(QFrame::StyledPanel);
-        frame_5->setFrameShadow(QFrame::Raised);
-        horizontalLayout_5 = new QHBoxLayout(frame_5);
-        horizontalLayout_5->setSpacing(6);
-        horizontalLayout_5->setContentsMargins(11, 11, 11, 11);
-        horizontalLayout_5->setObjectName(QString::fromUtf8("horizontalLayout_5"));
-        textEdit = new QTextEdit(frame_5);
-        textEdit->setObjectName(QString::fromUtf8("textEdit"));
-
-        horizontalLayout_5->addWidget(textEdit);
-
-        textEdit_2 = new QTextEdit(frame_5);
-        textEdit_2->setObjectName(QString::fromUtf8("textEdit_2"));
-
-        horizontalLayout_5->addWidget(textEdit_2);
-
-        textEdit_3 = new QTextEdit(frame_5);
-        textEdit_3->setObjectName(QString::fromUtf8("textEdit_3"));
-
-        horizontalLayout_5->addWidget(textEdit_3);
-
-
-        verticalLayout_2->addWidget(frame_5);
-
         frame_6 = new QFrame(frame_4);
         frame_6->setObjectName(QString::fromUtf8("frame_6"));
+        frame_6->setMaximumSize(QSize(16777215, 50));
         frame_6->setFrameShape(QFrame::StyledPanel);
         frame_6->setFrameShadow(QFrame::Raised);
         horizontalLayout_6 = new QHBoxLayout(frame_6);
@@ -133,6 +106,21 @@ public:
         lb_State->setObjectName(QString::fromUtf8("lb_State"));
 
         horizontalLayout_6->addWidget(lb_State);
+
+        textEdit_2 = new QTextEdit(frame_6);
+        textEdit_2->setObjectName(QString::fromUtf8("textEdit_2"));
+
+        horizontalLayout_6->addWidget(textEdit_2);
+
+        textEdit = new QTextEdit(frame_6);
+        textEdit->setObjectName(QString::fromUtf8("textEdit"));
+
+        horizontalLayout_6->addWidget(textEdit);
+
+        textEdit_3 = new QTextEdit(frame_6);
+        textEdit_3->setObjectName(QString::fromUtf8("textEdit_3"));
+
+        horizontalLayout_6->addWidget(textEdit_3);
 
 
         verticalLayout_2->addWidget(frame_6);
@@ -158,7 +146,7 @@ public:
         scrollArea->setWidgetResizable(true);
         scrollAreaWidgetContents = new QWidget();
         scrollAreaWidgetContents->setObjectName(QString::fromUtf8("scrollAreaWidgetContents"));
-        scrollAreaWidgetContents->setGeometry(QRect(0, 0, 274, 273));
+        scrollAreaWidgetContents->setGeometry(QRect(0, 0, 274, 311));
         horizontalLayout_7 = new QHBoxLayout(scrollAreaWidgetContents);
         horizontalLayout_7->setSpacing(6);
         horizontalLayout_7->setContentsMargins(11, 11, 11, 11);
@@ -198,7 +186,7 @@ public:
         verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
         frame_2 = new QFrame(frame);
         frame_2->setObjectName(QString::fromUtf8("frame_2"));
-        frame_2->setMaximumSize(QSize(186, 60));
+        frame_2->setMaximumSize(QSize(215, 60));
         frame_2->setFrameShape(QFrame::StyledPanel);
         frame_2->setFrameShadow(QFrame::Raised);
         formLayout = new QFormLayout(frame_2);
@@ -244,10 +232,10 @@ public:
 
         gridLayout->addWidget(btnClos, 0, 1, 1, 1);
 
-        textBrowser_3 = new QTextBrowser(frame_3);
-        textBrowser_3->setObjectName(QString::fromUtf8("textBrowser_3"));
+        lw_MsgList = new QListWidget(frame_3);
+        lw_MsgList->setObjectName(QString::fromUtf8("lw_MsgList"));
 
-        gridLayout->addWidget(textBrowser_3, 1, 0, 1, 2);
+        gridLayout->addWidget(lw_MsgList, 1, 0, 1, 2);
 
 
         verticalLayout->addWidget(frame_3);
@@ -259,7 +247,6 @@ public:
         verticalLayout_2->addWidget(frame_7);
 
         frame_7->raise();
-        frame_5->raise();
         frame_6->raise();
 
         horizontalLayout->addWidget(frame_4);

@@ -116,7 +116,7 @@
     <QtMoc Include="Logger.h" />
     <QtMoc Include="MsgToSecsMsg.h" />
     <ClInclude Include="SecsType.h" />
-    <ClInclude Include="SmlManager.h" />
+    <QtMoc Include="SmlManager.h" />
     <QtMoc Include="HsmsSender.h" />
     <ClInclude Include="HsmsBuilder.h" />
     <ClInclude Include="HsmsEnums.h" />

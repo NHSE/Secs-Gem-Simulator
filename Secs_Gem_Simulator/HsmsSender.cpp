@@ -26,7 +26,7 @@ bool HsmsSender::InsertMsgQue(QByteArray &msg)
     }
     else
     {
-
+        //Logger::instance()->getLog(msg[1]);
     }
 
     return true;
@@ -48,6 +48,7 @@ void HsmsSender::run()
         mutex.unlock();
 
         socket->write(msg);
+        Logger::instance()->getLog(QString(msg.toHex()));
     }
 }
 

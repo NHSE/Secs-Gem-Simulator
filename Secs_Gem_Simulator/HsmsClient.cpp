@@ -51,3 +51,20 @@ void HsmsClient::onSocketError(QAbstractSocket::SocketError error)
 {
 
 }
+
+SmlMessage HsmsClient::SendSecsMsg(SmlMessage Msg)
+{
+    //데이터 만들기
+    QByteArray data_msg = hsmsBuilder->buildBodyFromSml(Msg.fullText);
+    int length = data_msg.length();
+
+    //길이 + 헤더 만들기
+    QByteArray packet = hsmsBuilder->MakeDataHeader(Msg, length);
+
+    //A(길이) + B(헤더) + C(데이터) 영역 합치기
+    packet.append(data_msg);
+
+    hsmsSender->InsertMsgQue(packet);
+
+    return Msg;
+}

@@ -2,6 +2,7 @@
 
 #include <QtCore/QObject>
 #include "HsmsEnums.h"
+#include "SecsType.h"
 
 class HsmsBuilder {
 
@@ -9,8 +10,11 @@ public:
     explicit HsmsBuilder();
     ~HsmsBuilder();
 
-    QByteArray MakeControlMsg(HsmsSType type);
+    QByteArray MakeControlMsg(const HsmsSType& type);
+    QByteArray MakeDataHeader(const SmlMessage& Msg, const int& length);
+    QByteArray buildBodyFromSml(const QString& fullText);
 
 private:
-
+    std::vector<QString> ParserData(const QString& bodyText);
+    int getLength(const QString& type);
 };
