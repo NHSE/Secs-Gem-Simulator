@@ -67,6 +67,9 @@
     <ClCompile Include="MsgToSecsMsg.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="SettingMenu.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="HsmsClient.h">
@@ -87,6 +90,9 @@
     <QtMoc Include="SmlManager.h">
       <Filter>Header Files</Filter>
     </QtMoc>
+    <QtMoc Include="SettingMenu.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="HsmsEnums.h">
@@ -104,5 +110,10 @@
     <ClInclude Include="SecsType.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <QtUic Include="SettingMenu.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
   </ItemGroup>
 </Project>

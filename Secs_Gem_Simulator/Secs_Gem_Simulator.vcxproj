@@ -96,6 +96,7 @@
     <ClCompile Include="Logger.cpp" />
     <ClCompile Include="MsgToSecsMsg.cpp" />
     <ClCompile Include="SmlManager.cpp" />
+    <ClCompile Include="SettingMenu.cpp" />
     <QtRcc Include="Secs_Gem_Simulator.qrc" />
     <QtUic Include="MainWindow.ui" />
     <QtMoc Include="MainWindow.h" />
@@ -105,11 +106,13 @@
     <ClCompile Include="HsmsAdapter.cpp" />
     <ClCompile Include="MainWindow.cpp" />
     <ClCompile Include="main.cpp" />
+    <QtUic Include="SettingMenu.ui" />
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="HsmsClient.h" />
   </ItemGroup>
   <ItemGroup>
+    <QtMoc Include="SettingMenu.h" />
     <QtMoc Include="HsmsReceiver.h" />
     <ClInclude Include="ISocket.h" />
     <ClInclude Include="HsmsAdapter.h" />

@@ -1,10 +1,8 @@
-#include "HsmsSender.h"
-#include "Logger.h"
+﻿#include "HsmsSender.h"
 
 HsmsSender::HsmsSender(ISocket* socket, QObject* parent)
-    : QThread(parent), socket(socket)
+    : QObject(parent), socket(socket)
 {
-
 }
 
 HsmsSender::~HsmsSender()
@@ -12,43 +10,31 @@ HsmsSender::~HsmsSender()
 
 }
 
-bool HsmsSender::InsertMsgQue(QByteArray &msg)
+bool HsmsSender::InsertMsgQue(QByteArray& msg)
 {
-    bool ret = false;
-
-    QMutexLocker locker(&mutex);
-    MsgQue.enqueue(msg);
-    cond.wakeOne();
-
-    if (msg[6] == char(0x00)) // 0 : Control Msg, 0 < : Data Msg
     {
-        Logger::instance()->getLog(msg);
-    }
-    else
-    {
-        //Logger::instance()->getLog(msg[1]);
+        QMutexLocker locker(&mutex);
+        MsgQue.enqueue(msg);
     }
 
+    emit sendNext();   // ⭐ 이벤트 기반
     return true;
 }
 
-void HsmsSender::run()
+void HsmsSender::process()
 {
-    while (1)
+    QByteArray msg;
+
     {
-        mutex.lock();
+        QMutexLocker locker(&mutex);
+        if (MsgQue.isEmpty())
+            return;
 
-        while (MsgQue.isEmpty())
-        {
-            cond.wait(&mutex);
-        }
-
-        QByteArray msg = MsgQue.dequeue();
-
-        mutex.unlock();
-
-        socket->write(msg);
-        Logger::instance()->getLog(QString(msg.toHex()));
+        msg = MsgQue.dequeue();
     }
+
+    socket->write(msg);
+
+    Logger::instance()->getLog(MsgToSecsMsg::instance()->onMessage(msg));
 }
 

@@ -15,4 +15,5 @@ public:
 
 private:
 	QString makeKey(int s, int f);
+	bool validateSmlFormat(const QString& text, QString& errorMsg);
 };

@@ -18,7 +18,6 @@ public:
 
 private:
     ISocket* socket;
-    MsgToSecsMsg* msgToSecsMsg;
 
 signals:
     void setValue(QString State);

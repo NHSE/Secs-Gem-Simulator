@@ -3,7 +3,7 @@
 HsmsReceiver::HsmsReceiver(ISocket* socket, QObject* parent)
     : QObject(parent), socket(socket)
 {
-    msgToSecsMsg = new MsgToSecsMsg(this);
+
 }
 
 HsmsReceiver::~HsmsReceiver()
@@ -18,5 +18,5 @@ void HsmsReceiver::onReadyRead()
     if (data.isEmpty())
         return;
 
-    Logger::instance()->getLog(msgToSecsMsg->onMessage(data));
+    Logger::instance()->getLog(MsgToSecsMsg::instance()->onMessage(data));
 }

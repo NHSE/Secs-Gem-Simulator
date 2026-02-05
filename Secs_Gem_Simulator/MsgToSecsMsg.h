@@ -7,6 +7,8 @@
 class MsgToSecsMsg : public QObject {
     Q_OBJECT
 public:
+    static MsgToSecsMsg* instance();
+
     explicit MsgToSecsMsg(QObject* parent = nullptr);
     ~MsgToSecsMsg();
 

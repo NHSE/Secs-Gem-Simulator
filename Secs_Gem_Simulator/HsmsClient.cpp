@@ -13,8 +13,7 @@ HsmsClient::HsmsClient(QObject* parent)
     connect(hsmsSender, SIGNAL(setValue(QString)), this, SLOT(StateChange(QString)));
     connect(TcpSocket, SIGNAL(&QTcpSocket::errorOccurred), this, SLOT(onSocketError));
     connect(TcpSocket, SIGNAL(readyRead()), hsmsReceiver, SLOT(onReadyRead()));
-
-    hsmsSender->start();
+    connect(hsmsSender, &HsmsSender::sendNext, hsmsSender, &HsmsSender::process, Qt::QueuedConnection);
 }
 
 HsmsClient::~HsmsClient()
@@ -40,6 +39,15 @@ void HsmsClient::DisconnectToEquipment()
         hsmsSender->InsertMsgQue(msg);
         TcpSocket->close();
     }
+}
+
+void HsmsClient::LinkTestToEquipment()
+{
+    if (TcpSocket->state() != QAbstractSocket::ConnectedState)   return;
+
+    QByteArray msg = hsmsBuilder->MakeControlMsg(HsmsSType::LinktestReq);
+
+    hsmsSender->InsertMsgQue(msg);
 }
 
 void HsmsClient::StateChange(QString State)

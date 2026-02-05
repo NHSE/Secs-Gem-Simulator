@@ -1,4 +1,7 @@
 ﻿   Qt/MSBuild: 3.4.1.0
    Qt: 5.12.6
-  HsmsClient.cpp
-  Secs_Gem_Simulator.vcxproj -> C:\Users\36175\OneDrive\문서\Project\15-3\Secs_Gem_Simulator\x64\Debug\Secs_Gem_Simulator.exe
+  moc MainWindow.h
+  MainWindow.cpp
+  main.cpp
+  moc_MainWindow.cpp
+  Secs_Gem_Simulator.vcxproj -> C:\Users\36175\OneDrive\문서\Project\17-5\Secs_Gem_Simulator\x64\Debug\Secs_Gem_Simulator.exe

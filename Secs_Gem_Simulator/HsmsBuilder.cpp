@@ -26,22 +26,26 @@ QString extractBody(const QString& fullText)
 
 uint8_t secsTypeToByte(const QString& type)
 {
-    if (type == "L")  return 0x01;
+    if (type == "L")        return 0x01;
 
-    if (type == "A")  return 0x41;
+    if (type == "A")        return 0x41;
 
-    if (type == "U1") return 0xA5;
-    if (type == "U2") return 0xA9;
-    if (type == "U4") return 0xB1;
-    if (type == "U8") return 0xA1;
+    if (type == "B")        return 0x21;
 
-    if (type == "I1") return 0x65;
-    if (type == "I2") return 0x69;
-    if (type == "I4") return 0x71;
-    if (type == "I8") return 0x61;
+    if (type == "BOOLEAN")  return 0x25;
 
-    if (type == "F4") return 0x91;
-    if (type == "F8") return 0x81;
+    if (type == "U1")       return 0xA5;
+    if (type == "U2")       return 0xA9;
+    if (type == "U4")       return 0xB1;
+    if (type == "U8")       return 0xA1;
+
+    if (type == "I1")       return 0x65;
+    if (type == "I2")       return 0x69;
+    if (type == "I4")       return 0x71;
+    if (type == "I8")       return 0x61;
+
+    if (type == "F4")       return 0x91;
+    if (type == "F8")       return 0x81;
 
     return 0x01; // unknown
 }
@@ -153,9 +157,30 @@ QByteArray HsmsBuilder::buildBodyFromSml(const QString& fullText)
 
             body.append(char(type));
 
-            int v = data[++index].toInt(nullptr, 16);
+            int length = data[++index].toInt();
+            body.append(char(length));
 
+            int v = data[++index].toInt(nullptr, 16);
             body.append(char(v));
+
+        }
+        else if (data[index] == "BOOLEAN")
+        {
+            uint8_t type = secsTypeToByte(data[index]);
+
+            body.append(char(type));
+            body.append(char(data[++index].toInt()));
+            
+            QString result = data[++index];
+            if (result == "TRUE")
+            {
+                body.append(char(0xFF));
+            }
+            else
+            {
+                body.append(char(0x00));
+            }
+
         }
         else
         {
@@ -168,8 +193,12 @@ QByteArray HsmsBuilder::buildBodyFromSml(const QString& fullText)
                 QString ascii = data[++index];
                 QByteArray asciiBytes = ascii.toLatin1();
 
-                body.append(char(asciiBytes.size()));   // length
-                body.append(asciiBytes);                // data
+                if (asciiBytes.size() > 0)
+                {
+                    body.append(char(asciiBytes.size()));   // length
+                    body.append(asciiBytes);                // data
+                }
+                else body.append(char(0x00));
             }
             else
             {
@@ -231,12 +260,12 @@ QByteArray HsmsBuilder::MakeDataHeader(const SmlMessage& Msg, const int &length)
     // HSMS Header = 10 bytes
     // Body 없음
     // ---------------------------------
-    quint8 data_length = static_cast<quint8>(length) + 10;
+    quint32 data_length = static_cast<quint32>(length) + 10;
 
-    packet.append(static_cast<quint8>((data_length >> 24) & 0xFF));
-    packet.append(static_cast<quint8>((data_length >> 16) & 0xFF));
-    packet.append(static_cast<quint8>((data_length >> 8) & 0xFF));
-    packet.append(static_cast<quint8>(data_length & 0xFF));
+    packet.append(char((data_length >> 24) & 0xFF));
+    packet.append(char((data_length >> 16) & 0xFF));
+    packet.append(char((data_length >> 8) & 0xFF));
+    packet.append(char(data_length & 0xFF));
 
     // ---------------------------------
     // HSMS Header (10 bytes)
@@ -244,7 +273,7 @@ QByteArray HsmsBuilder::MakeDataHeader(const SmlMessage& Msg, const int &length)
 
     // Device ID (임시 0x0000)
     packet.append(char(0x00));
-    packet.append(char(0x00));
+    packet.append(char(0x01));
 
     // Stream + W-bit
     quint8 streamByte = Msg.stream & 0x7F;
@@ -262,11 +291,11 @@ QByteArray HsmsBuilder::MakeDataHeader(const SmlMessage& Msg, const int &length)
     // SType (Data Message = 0x00)
     packet.append(char(0x00));
 
-    // System Bytes (임시 0)
+    // System Bytes
     packet.append(char(0x00));
     packet.append(char(0x00));
     packet.append(char(0x00));
-    packet.append(char(0x01));
+    packet.append(char(0x08));
 
     return packet;
 }

@@ -1,7 +1,8 @@
 ﻿#include "MainWindow.h"
 
 #include <QFileDialog>
-
+#include <QTime>
+#include <QDateTime>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -13,6 +14,8 @@ MainWindow::MainWindow(QWidget *parent)
 
     connect(ui.btnConnect, SIGNAL(clicked()), hsmsClient, SLOT(connectToEquipment()));
     connect(ui.btnDisConnect, SIGNAL(clicked()), hsmsClient, SLOT(DisconnectToEquipment()));
+    connect(ui.btnLinkTest, SIGNAL(clicked()), hsmsClient, SLOT(LinkTestToEquipment()));
+
     connect(ui.btnOpen, SIGNAL(clicked()), this, SLOT(btnOpen_Clicked()));
     connect(ui.btnClos, SIGNAL(clicked()), this, SLOT(btnClose_Clicked()));
 
@@ -22,6 +25,20 @@ MainWindow::MainWindow(QWidget *parent)
     ui.lw_MsgList->setContextMenuPolicy(Qt::CustomContextMenu);
     connect(ui.lw_MsgList, &QListWidget::customContextMenuRequested, this, &MainWindow::onListContextMenu);
     connect(ui.lw_MsgList, &QListWidget::itemDoubleClicked, this, &MainWindow::onMsgItemDoubleClicked);
+
+    settingMenu = new SettingMenu(this);
+
+    // 메뉴 생성
+    QMenu* Menu = ui.menuBar->addMenu("Setting");
+
+    // 액션 생성
+    SettingAction = new QAction("Setting", this);
+
+    // 메뉴에 액션 추가
+    Menu->addAction(SettingAction);
+
+    // 시그널 연결
+    connect(SettingAction, SIGNAL(triggered()), this, SLOT(OpenTimeOutMenu()));
 }
 
 MainWindow::~MainWindow()
@@ -35,7 +52,6 @@ void MainWindow::btnOpen_Clicked()
     QString error;
 
     if (!smlManager->ParseFile(path, messages, error)) {
-        //QMessageBox::critical(this, "Load Failed", error);
         return;
     }
 
@@ -72,7 +88,11 @@ void MainWindow::SetConnectState(QString State)
 
 void MainWindow::Logging_SecsMsg(QString Msg)
 {
-    ui.tb_SecsMsg->append(Msg);
+    QString msg = QString("[%1] %2")
+        .arg(QDateTime::currentDateTime().toString("yyyy-MM-dd HH:mm:ss"))
+        .arg(Msg);
+
+    ui.tb_SecsMsg->append(msg);
 }
 
 void MainWindow::onListContextMenu(const QPoint& pos)
@@ -88,6 +108,11 @@ void MainWindow::onListContextMenu(const QPoint& pos)
     if (selected == showAction) {
         onShowSml();
     }
+}
+
+void MainWindow::OpenTimeOutMenu()
+{
+    settingMenu->show();
 }
 
 void MainWindow::onShowSml()

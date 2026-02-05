@@ -21,8 +21,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_HsmsClient_t {
-    QByteArrayData data[10];
-    char stringdata0[129];
+    QByteArrayData data[11];
+    char stringdata0[149];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -37,16 +37,18 @@ QT_MOC_LITERAL(2, 20, 0), // ""
 QT_MOC_LITERAL(3, 21, 5), // "State"
 QT_MOC_LITERAL(4, 27, 18), // "connectToEquipment"
 QT_MOC_LITERAL(5, 46, 21), // "DisconnectToEquipment"
-QT_MOC_LITERAL(6, 68, 11), // "StateChange"
-QT_MOC_LITERAL(7, 80, 13), // "onSocketError"
-QT_MOC_LITERAL(8, 94, 28), // "QAbstractSocket::SocketError"
-QT_MOC_LITERAL(9, 123, 5) // "error"
+QT_MOC_LITERAL(6, 68, 19), // "LinkTestToEquipment"
+QT_MOC_LITERAL(7, 88, 11), // "StateChange"
+QT_MOC_LITERAL(8, 100, 13), // "onSocketError"
+QT_MOC_LITERAL(9, 114, 28), // "QAbstractSocket::SocketError"
+QT_MOC_LITERAL(10, 143, 5) // "error"
 
     },
     "HsmsClient\0setValue\0\0State\0"
     "connectToEquipment\0DisconnectToEquipment\0"
-    "StateChange\0onSocketError\0"
-    "QAbstractSocket::SocketError\0error"
+    "LinkTestToEquipment\0StateChange\0"
+    "onSocketError\0QAbstractSocket::SocketError\0"
+    "error"
 };
 #undef QT_MOC_LITERAL
 
@@ -56,7 +58,7 @@ static const uint qt_meta_data_HsmsClient[] = {
        8,       // revision
        0,       // classname
        0,    0, // classinfo
-       5,   14, // methods
+       6,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -64,13 +66,14 @@ static const uint qt_meta_data_HsmsClient[] = {
        1,       // signalCount
 
  // signals: name, argc, parameters, tag, flags
-       1,    1,   39,    2, 0x06 /* Public */,
+       1,    1,   44,    2, 0x06 /* Public */,
 
  // slots: name, argc, parameters, tag, flags
-       4,    0,   42,    2, 0x0a /* Public */,
-       5,    0,   43,    2, 0x0a /* Public */,
-       6,    1,   44,    2, 0x0a /* Public */,
-       7,    1,   47,    2, 0x0a /* Public */,
+       4,    0,   47,    2, 0x0a /* Public */,
+       5,    0,   48,    2, 0x0a /* Public */,
+       6,    0,   49,    2, 0x0a /* Public */,
+       7,    1,   50,    2, 0x0a /* Public */,
+       8,    1,   53,    2, 0x0a /* Public */,
 
  // signals: parameters
     QMetaType::Void, QMetaType::QString,    3,
@@ -78,8 +81,9 @@ static const uint qt_meta_data_HsmsClient[] = {
  // slots: parameters
     QMetaType::Void,
     QMetaType::Void,
+    QMetaType::Void,
     QMetaType::Void, QMetaType::QString,    3,
-    QMetaType::Void, 0x80000000 | 8,    9,
+    QMetaType::Void, 0x80000000 | 9,   10,
 
        0        // eod
 };
@@ -93,14 +97,15 @@ void HsmsClient::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         case 0: _t->setValue((*reinterpret_cast< QString(*)>(_a[1]))); break;
         case 1: _t->connectToEquipment(); break;
         case 2: _t->DisconnectToEquipment(); break;
-        case 3: _t->StateChange((*reinterpret_cast< QString(*)>(_a[1]))); break;
-        case 4: _t->onSocketError((*reinterpret_cast< QAbstractSocket::SocketError(*)>(_a[1]))); break;
+        case 3: _t->LinkTestToEquipment(); break;
+        case 4: _t->StateChange((*reinterpret_cast< QString(*)>(_a[1]))); break;
+        case 5: _t->onSocketError((*reinterpret_cast< QAbstractSocket::SocketError(*)>(_a[1]))); break;
         default: ;
         }
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
         switch (_id) {
         default: *reinterpret_cast<int*>(_a[0]) = -1; break;
-        case 4:
+        case 5:
             switch (*reinterpret_cast<int*>(_a[1])) {
             default: *reinterpret_cast<int*>(_a[0]) = -1; break;
             case 0:
@@ -149,13 +154,13 @@ int HsmsClient::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 5)
+        if (_id < 6)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 5;
+        _id -= 6;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 5)
+        if (_id < 6)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 5;
+        _id -= 6;
     }
     return _id;
 }

@@ -66,11 +66,14 @@ public:
     QFrame *frame_3;
     QGridLayout *gridLayout;
     QPushButton *btnOpen;
-    QPushButton *btnClos;
     QListWidget *lw_MsgList;
+    QPushButton *btnClos;
+    QPushButton *btnLinkTest;
     QMenuBar *menuBar;
     QToolBar *mainToolBar;
     QStatusBar *statusBar;
+    QToolBar *toolBar;
+    QToolBar *toolBar_2;
 
     void setupUi(QMainWindow *Secs_Gem_SimulatorClass)
     {
@@ -227,15 +230,20 @@ public:
 
         gridLayout->addWidget(btnOpen, 0, 0, 1, 1);
 
+        lw_MsgList = new QListWidget(frame_3);
+        lw_MsgList->setObjectName(QString::fromUtf8("lw_MsgList"));
+
+        gridLayout->addWidget(lw_MsgList, 1, 0, 1, 2);
+
         btnClos = new QPushButton(frame_3);
         btnClos->setObjectName(QString::fromUtf8("btnClos"));
 
         gridLayout->addWidget(btnClos, 0, 1, 1, 1);
 
-        lw_MsgList = new QListWidget(frame_3);
-        lw_MsgList->setObjectName(QString::fromUtf8("lw_MsgList"));
+        btnLinkTest = new QPushButton(frame_3);
+        btnLinkTest->setObjectName(QString::fromUtf8("btnLinkTest"));
 
-        gridLayout->addWidget(lw_MsgList, 1, 0, 1, 2);
+        gridLayout->addWidget(btnLinkTest, 2, 1, 1, 1);
 
 
         verticalLayout->addWidget(frame_3);
@@ -258,10 +266,17 @@ public:
         Secs_Gem_SimulatorClass->setMenuBar(menuBar);
         mainToolBar = new QToolBar(Secs_Gem_SimulatorClass);
         mainToolBar->setObjectName(QString::fromUtf8("mainToolBar"));
+        mainToolBar->setMouseTracking(false);
         Secs_Gem_SimulatorClass->addToolBar(Qt::TopToolBarArea, mainToolBar);
         statusBar = new QStatusBar(Secs_Gem_SimulatorClass);
         statusBar->setObjectName(QString::fromUtf8("statusBar"));
         Secs_Gem_SimulatorClass->setStatusBar(statusBar);
+        toolBar = new QToolBar(Secs_Gem_SimulatorClass);
+        toolBar->setObjectName(QString::fromUtf8("toolBar"));
+        Secs_Gem_SimulatorClass->addToolBar(Qt::TopToolBarArea, toolBar);
+        toolBar_2 = new QToolBar(Secs_Gem_SimulatorClass);
+        toolBar_2->setObjectName(QString::fromUtf8("toolBar_2"));
+        Secs_Gem_SimulatorClass->addToolBar(Qt::TopToolBarArea, toolBar_2);
 
         retranslateUi(Secs_Gem_SimulatorClass);
 
@@ -282,6 +297,9 @@ public:
         btnDisConnect->setText(QApplication::translate("Secs_Gem_SimulatorClass", "DisConnect", nullptr));
         btnOpen->setText(QApplication::translate("Secs_Gem_SimulatorClass", "Open", nullptr));
         btnClos->setText(QApplication::translate("Secs_Gem_SimulatorClass", "Close", nullptr));
+        btnLinkTest->setText(QApplication::translate("Secs_Gem_SimulatorClass", "LinkTest", nullptr));
+        toolBar->setWindowTitle(QApplication::translate("Secs_Gem_SimulatorClass", "toolBar", nullptr));
+        toolBar_2->setWindowTitle(QApplication::translate("Secs_Gem_SimulatorClass", "toolBar_2", nullptr));
     } // retranslateUi
 
 };

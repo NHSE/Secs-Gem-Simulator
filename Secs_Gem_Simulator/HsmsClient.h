@@ -31,6 +31,8 @@ signals:
 public slots:
     void connectToEquipment();
     void DisconnectToEquipment();
+    void LinkTestToEquipment();
+
     void StateChange(QString State);
     void onSocketError(QAbstractSocket::SocketError error);
 };

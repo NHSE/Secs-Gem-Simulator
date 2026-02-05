@@ -1,5 +1,12 @@
 #include "MsgToSecsMsg.h"
 
+MsgToSecsMsg* MsgToSecsMsg::instance()
+{
+    static MsgToSecsMsg instance;
+    return &instance;
+}
+
+
 MsgToSecsMsg::MsgToSecsMsg(QObject* parent)
     : QObject(parent)
 { }
@@ -44,7 +51,7 @@ QString MsgToSecsMsg::handleDataMessage(const HsmsHeader& h, const QByteArray& b
         secsTree = dumpSecs(body);
 
     
-    QString ret = "[HSMS][DATA]\n" + header + "\n" + secsTree;
+    QString ret = "\n[HSMS][DATA]\n" + header + "\n" + secsTree;
     return ret;
 }
 
@@ -53,12 +60,24 @@ QString MsgToSecsMsg::handleControlMessage(const HsmsHeader& h)
     QString ret = "";
 
     switch (h.sType) {
+    case 0x01:
+        ret = "Select.req";
+        break;
+
     case 0x02:
-        ret = "Select.rep";
+        ret = "Select.res";
+        break;
+
+    case 0x03:
+        ret = "Deselect.req";
         break;
 
     case 0x04:
         ret = "Deselect.res";
+        break;
+
+    case 0x05:
+        ret = "Linktest.req";
         break;
 
     case 0x06:
@@ -131,8 +150,8 @@ QString MsgToSecsMsg::parseItem(const QByteArray& data, int& offset, int depth)
     }
 
     // ---- BOOLEAN ----
-    if (type == SecsType::B) {
-        out += QString("%1<BOOLEAN[%2] 0x%3\n").arg(indent).arg(length).arg(static_cast<bool>(data[offset++]));
+    if (type == SecsType::BOOLEAN) {
+        out += QString("%1<BOOLEAN[%2] 0x%3").arg(indent).arg(length).arg(static_cast<bool>(data[offset++]));
         out += ">\n";
         return out;
     }

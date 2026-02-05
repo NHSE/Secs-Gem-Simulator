@@ -7,8 +7,10 @@
 #include <QWaitCondition>
 
 #include "ISocket.h"
+#include "MsgToSecsMsg.h"
+#include "Logger.h"
 
-class HsmsSender : public QThread {
+class HsmsSender : public QObject {
     Q_OBJECT
 
 public:
@@ -20,8 +22,6 @@ public:
 private:
     ISocket* socket;
 
-    void run();
-
 private:
     QQueue<QByteArray> MsgQue;
     QMutex mutex;
@@ -29,4 +29,8 @@ private:
 
 signals:
     void setValue(QString State);
+    void sendNext();
+
+public slots:
+    void process();
 };

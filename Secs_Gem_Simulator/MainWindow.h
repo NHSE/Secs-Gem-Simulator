@@ -4,21 +4,10 @@
 #include "HsmsClient.h"
 #include "Logger.h"
 #include "SmlManager.h"
+#include "SettingMenu.h"
 
 #include <QtWidgets/QMainWindow>
 #include <map>
-
-/*
-namespace std {
-    template <>
-    struct hash<SxFx> {
-        size_t operator()(const SxFx& k) const {
-            return (std::hash<int>()(k.stream) << 1)
-                ^ std::hash<int>()(k.function);
-        }
-    };
-}
-*/
 
 class MainWindow : public QMainWindow
 {
@@ -30,11 +19,15 @@ public:
 
 private:
     Ui::Secs_Gem_SimulatorClass ui;
+
     HsmsClient* hsmsClient;
     SmlManager* smlManager;
+    SettingMenu* settingMenu;
 
     QVector<SxFx> sxfxList;                 // ¸®½ºÆ® À§Á¬°ú 1:1 ¸ÅÄª
     std::map<SxFx, SmlMessage> messageMap;
+
+    QAction* SettingAction;
 
 private slots :
     void btnOpen_Clicked();
@@ -46,5 +39,6 @@ private slots :
     void onShowSml();
 
     void onMsgItemDoubleClicked(QListWidgetItem* item);
+    void OpenTimeOutMenu();
 };
 
