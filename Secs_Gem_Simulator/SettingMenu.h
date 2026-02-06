@@ -12,4 +12,12 @@ public:
 
 private:
 	Ui::Dialog ui;
+
+	bool makeFile();
+	void getFileData();
+
+signals:
+
+private slots:
+	void onSaveClicked();
 };

@@ -245,8 +245,12 @@ QByteArray HsmsBuilder::MakeControlMsg(const HsmsSType& type)
 
     packet.append(char(static_cast<uint8_t>(type)));                    // SType
 
-    packet.append(char(0x00)); packet.append(char(0x00));               // System Bytes
-    packet.append(char(0x00)); packet.append(char(0x00));
+    packet.append(char((systemByte >> 24) & 0xFF));                     // System Bytes
+    packet.append(char((systemByte >> 16) & 0xFF));
+    packet.append(char((systemByte >> 8) & 0xFF));
+    packet.append(char(systemByte & 0xFF));
+
+    systemByte++;
 
     return packet;
 }
@@ -292,10 +296,12 @@ QByteArray HsmsBuilder::MakeDataHeader(const SmlMessage& Msg, const int &length)
     packet.append(char(0x00));
 
     // System Bytes
-    packet.append(char(0x00));
-    packet.append(char(0x00));
-    packet.append(char(0x00));
-    packet.append(char(0x08));
+    packet.append(char((systemByte >> 24) & 0xFF));
+    packet.append(char((systemByte >> 16) & 0xFF));
+    packet.append(char((systemByte >> 8) & 0xFF));
+    packet.append(char(systemByte & 0xFF));
+
+    systemByte++;
 
     return packet;
 }

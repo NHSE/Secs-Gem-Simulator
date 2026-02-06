@@ -12,6 +12,9 @@ public:
     explicit MsgToSecsMsg(QObject* parent = nullptr);
     ~MsgToSecsMsg();
 
+    MsgToSecsMsg(const MsgToSecsMsg&) = delete;
+    MsgToSecsMsg& operator=(const MsgToSecsMsg&) = delete;
+
     QString onMessage(const QByteArray& msg);
 
 private:

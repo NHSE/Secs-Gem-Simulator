@@ -9,6 +9,7 @@
 #include "ISocket.h"
 #include "MsgToSecsMsg.h"
 #include "Logger.h"
+#include "SecsType.h"
 
 class HsmsSender : public QObject {
     Q_OBJECT
@@ -17,13 +18,13 @@ public:
     explicit HsmsSender(ISocket* socket, QObject* parent = nullptr);
     ~HsmsSender();
 
-    bool InsertMsgQue(QByteArray &msg);
+    bool InsertMsgQue(QByteArray &msg, bool wbit = false);
 
 private:
     ISocket* socket;
 
 private:
-    QQueue<QByteArray> MsgQue;
+    QQueue<QueData> MsgQue;
     QMutex mutex;
     QWaitCondition cond;
 

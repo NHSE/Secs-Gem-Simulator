@@ -65,7 +65,7 @@ QString MsgToSecsMsg::handleControlMessage(const HsmsHeader& h)
         break;
 
     case 0x02:
-        ret = "Select.res";
+        ret = "Select.rsp";
         break;
 
     case 0x03:
@@ -73,7 +73,7 @@ QString MsgToSecsMsg::handleControlMessage(const HsmsHeader& h)
         break;
 
     case 0x04:
-        ret = "Deselect.res";
+        ret = "Deselect.rsp";
         break;
 
     case 0x05:
@@ -81,7 +81,11 @@ QString MsgToSecsMsg::handleControlMessage(const HsmsHeader& h)
         break;
 
     case 0x06:
-        ret = "Linktest.res";
+        ret = "Linktest.rsp";
+        break;
+
+    case 0x09:
+        ret = "Separate.req";
         break;
 
     default:
@@ -184,7 +188,7 @@ QString MsgToSecsMsg::parseItem(const QByteArray& data, int& offset, int depth)
 
     // ---- I2 ----
     if (type == SecsType::I2) {
-        out += QString("%1<I2 ").arg(indent);
+        out += QString("%1<I2[%2] ").arg(indent).arg(length);
 
         int count = length / 2;
         for (int i = 0; i < count; ++i) {
@@ -202,7 +206,7 @@ QString MsgToSecsMsg::parseItem(const QByteArray& data, int& offset, int depth)
 
     // ---- I4 ----
     if (type == SecsType::I4) {
-        out += QString("%1<I4 ").arg(indent);
+        out += QString("%1<I4[%2] ").arg(indent).arg(length);
 
         int count = length / 4;
         for (int i = 0; i < count; ++i) {
@@ -222,7 +226,7 @@ QString MsgToSecsMsg::parseItem(const QByteArray& data, int& offset, int depth)
 
     // ---- I8 ----
     if (type == SecsType::I8) {
-        out += QString("%1<I8 ").arg(indent);
+        out += QString("%1<I8[%2] ").arg(indent).arg(length);
 
         int count = length / 8;
         for (int i = 0; i < count; ++i) {
@@ -246,7 +250,7 @@ QString MsgToSecsMsg::parseItem(const QByteArray& data, int& offset, int depth)
 
     // ---- F4 ----
     if (type == SecsType::F4) {
-        out += QString("%1<F4 ").arg(indent);
+        out += QString("%1<F4[%2] ").arg(indent).arg(length);
 
         int count = length / 4;
         for (int i = 0; i < count; ++i) {
@@ -269,7 +273,7 @@ QString MsgToSecsMsg::parseItem(const QByteArray& data, int& offset, int depth)
 
     // ---- F8 ----
     if (type == SecsType::F8) {
-        out += QString("%1<F8 ").arg(indent);
+        out += QString("%1<F8[%2] ").arg(indent).arg(length);
 
         int count = length / 8;
         for (int i = 0; i < count; ++i) {
@@ -296,7 +300,7 @@ QString MsgToSecsMsg::parseItem(const QByteArray& data, int& offset, int depth)
 
     // ---- U1 ----
     if (type == SecsType::U1) {
-        out += QString("%1<U1 ").arg(indent);
+        out += QString("%1<U1[%2] ").arg(indent).arg(length);
         for (int i = 0; i < length; ++i) {
             out += QString::number(quint8(data[offset++])) + " ";
         }
@@ -306,7 +310,7 @@ QString MsgToSecsMsg::parseItem(const QByteArray& data, int& offset, int depth)
 
     // ---- U2 ----
     if (type == SecsType::U2) {
-        out += QString("%1<U2 ").arg(indent);
+        out += QString("%1<U2[%2] ").arg(indent).arg(length);
 
         int count = length / 2;
         for (int i = 0; i < count; ++i) {
@@ -324,7 +328,7 @@ QString MsgToSecsMsg::parseItem(const QByteArray& data, int& offset, int depth)
 
     // ---- U4 ----
     if (type == SecsType::U4) {
-        out += QString("%1<U4 ").arg(indent);
+        out += QString("%1<U4[%2] ").arg(indent).arg(length);
 
         int count = length / 4;   // U4 °³¼ö
 
@@ -347,7 +351,7 @@ QString MsgToSecsMsg::parseItem(const QByteArray& data, int& offset, int depth)
 
     // ---- U8 ----
     if (type == SecsType::U8) {
-        out += QString("%1<U8 ").arg(indent);
+        out += QString("%1<U8[%2] ").arg(indent).arg(length);
 
         int count = length / 8;
         for (int i = 0; i < count; ++i) {

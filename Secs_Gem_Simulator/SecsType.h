@@ -1,17 +1,23 @@
 #pragma once
 
-enum class SecsType {
+#include <QByteArray>
+#include <QString>
+
+enum class SecsType 
+{
     L, B, BOOLEAN, A, U1, U2, U4, U8, I1, I2, I4, I8, F4, F8, UNKNOWN
 };
 
-struct SmlMessage {
+struct SmlMessage 
+{
     int stream;
     int function;
     bool wbit;
     QString fullText;
 };
 
-struct SxFx {
+struct SxFx 
+{
     int stream;
     int function;
 
@@ -20,4 +26,10 @@ struct SxFx {
             return stream < other.stream;
         return function < other.function;
     }
+};
+
+struct QueData
+{
+    QByteArray msg;
+    bool wbit = false;
 };

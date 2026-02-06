@@ -17,4 +17,7 @@ public:
 private:
     std::vector<QString> ParserData(const QString& bodyText);
     int getLength(const QString& type);
+
+private:
+    quint32 systemByte = 0x00;
 };

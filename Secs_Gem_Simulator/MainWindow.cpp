@@ -11,6 +11,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     hsmsClient = new HsmsClient(this);
     smlManager = new SmlManager(this);
+    settingMenu = new SettingMenu(this);
 
     connect(ui.btnConnect, SIGNAL(clicked()), hsmsClient, SLOT(connectToEquipment()));
     connect(ui.btnDisConnect, SIGNAL(clicked()), hsmsClient, SLOT(DisconnectToEquipment()));
@@ -26,18 +27,9 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui.lw_MsgList, &QListWidget::customContextMenuRequested, this, &MainWindow::onListContextMenu);
     connect(ui.lw_MsgList, &QListWidget::itemDoubleClicked, this, &MainWindow::onMsgItemDoubleClicked);
 
-    settingMenu = new SettingMenu(this);
-
-    // 메뉴 생성
     QMenu* Menu = ui.menuBar->addMenu("Setting");
-
-    // 액션 생성
     SettingAction = new QAction("Setting", this);
-
-    // 메뉴에 액션 추가
     Menu->addAction(SettingAction);
-
-    // 시그널 연결
     connect(SettingAction, SIGNAL(triggered()), this, SLOT(OpenTimeOutMenu()));
 }
 

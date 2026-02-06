@@ -10,11 +10,14 @@ HsmsSender::~HsmsSender()
 
 }
 
-bool HsmsSender::InsertMsgQue(QByteArray& msg)
+bool HsmsSender::InsertMsgQue(QByteArray& msg, bool wbit)
 {
     {
         QMutexLocker locker(&mutex);
-        MsgQue.enqueue(msg);
+
+        QueData data;
+        data.msg = msg, data.wbit = wbit;
+        MsgQue.enqueue(data);
     }
 
     emit sendNext();   // ⭐ 이벤트 기반
@@ -23,18 +26,18 @@ bool HsmsSender::InsertMsgQue(QByteArray& msg)
 
 void HsmsSender::process()
 {
-    QByteArray msg;
+    QueData data;
 
     {
         QMutexLocker locker(&mutex);
         if (MsgQue.isEmpty())
             return;
 
-        msg = MsgQue.dequeue();
+        data = MsgQue.dequeue();
     }
 
-    socket->write(msg);
+    socket->write(data);
 
-    Logger::instance()->getLog(MsgToSecsMsg::instance()->onMessage(msg));
+    Logger::instance()->getLog(MsgToSecsMsg::instance()->onMessage(data.msg));
 }
 

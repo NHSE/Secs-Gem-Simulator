@@ -164,16 +164,34 @@ QString SmlManager::makeKey(int s, int f) {
 
 bool SmlManager::validateSmlFormat(const QString& text, QString& errorMsg)
 {
-    QRegularExpression withSize(
+    // <L [3]> , <U4 [10]> 등 size + 닫힘
+    QRegularExpression withSizeAndClose(
         R"(<\s*([A-Z][A-Z0-9]*)\s*\[\s*\d+\s*\][^>]*>)"
     );
 
-    QRegularExpression asciiNoSize(
+    // <L [3] , <U4 [10]  (닫힘 없음, 하지만 size 있음 → 허용)
+    QRegularExpression withSizeNoClose(
+        R"(<\s*([A-Z][A-Z0-9]*)\s*\[\s*\d+\s*\][^>]*)"
+    );
+
+    // <A "ABC">
+    QRegularExpression asciiClosed(
         R"(<\s*A\s+[^>]*>)"
     );
 
+    // <A "ABC   (닫힘 없음 → 에러)
+    QRegularExpression asciiNotClosed(
+        R"(<\s*A\s+.*$)"
+    );
+
+    // <L>, <U4 [3]>, <A "ABC">
     QRegularExpression anyClosedTag(
-        R"(<\s*([A-Z]\d*)[^>\n]*>)"
+        R"(<\s*([A-Z][A-Z0-9]*)[^>\n]*>)"
+    );
+
+    // <L , <U4 , <I2  (size도 없고 닫힘도 없음 → 에러)
+    QRegularExpression openNoSize(
+        R"(<\s*([A-Z][A-Z0-9]*)\s*$)"
     );
 
     QSet<QString> sizeRequiredTypes = {
@@ -191,7 +209,28 @@ bool SmlManager::validateSmlFormat(const QString& text, QString& errorMsg)
         if (line.isEmpty())
             continue;
 
-        // <L [3] 처럼 안 닫힌 줄은 스킵
+        // 1️⃣ <L , <U4 처럼 size 없는 미완성 태그
+        auto openNoSizeMatch = openNoSize.match(line);
+        if (openNoSizeMatch.hasMatch()) {
+            QString type = openNoSizeMatch.captured(1);
+
+            if (sizeRequiredTypes.contains(type) || type == "A") {
+                errorMsg = QString(
+                    "Tag not closed or size missing at line %1: %2"
+                ).arg(i + 1).arg(line);
+                return false;
+            }
+        }
+
+        // 2️⃣ ASCII 닫힘 안 된 경우
+        if (asciiNotClosed.match(line).hasMatch() && !line.endsWith(">")) {
+            errorMsg = QString(
+                "ASCII tag not closed at line %1: %2"
+            ).arg(i + 1).arg(line);
+            return false;
+        }
+
+        // 3️⃣ 닫힌 태그만 아래에서 구조 검사
         if (!line.endsWith(">"))
             continue;
 
@@ -201,10 +240,10 @@ bool SmlManager::validateSmlFormat(const QString& text, QString& errorMsg)
 
         QString type = m.captured(1);
 
-        // ASCII
+        // 4️⃣ ASCII
         if (type == "A") {
-            if (!asciiNoSize.match(line).hasMatch() &&
-                !withSize.match(line).hasMatch()) {
+            if (!asciiClosed.match(line).hasMatch() &&
+                !withSizeAndClose.match(line).hasMatch()) {
                 errorMsg = QString(
                     "Invalid ASCII format at line %1: %2"
                 ).arg(i + 1).arg(line);
@@ -213,9 +252,10 @@ bool SmlManager::validateSmlFormat(const QString& text, QString& errorMsg)
             continue;
         }
 
-        // 나머지는 size 필수
+        // 5️⃣ size 필수 타입
         if (sizeRequiredTypes.contains(type)) {
-            if (!withSize.match(line).hasMatch()) {
+            if (!withSizeAndClose.match(line).hasMatch() &&
+                !withSizeNoClose.match(line).hasMatch()) {
                 errorMsg = QString(
                     "Size required but missing at line %1: %2"
                 ).arg(i + 1).arg(line);

@@ -24,10 +24,8 @@ void HsmsClient::connectToEquipment()
     if (TcpSocket->state() == QAbstractSocket::ConnectedState)   return;
 
     TcpSocket->connectToHost(QHostAddress("127.0.0.1"), 5000);
-
     QByteArray msg = hsmsBuilder->MakeControlMsg(HsmsSType::SelectReq);
-
-    hsmsSender->InsertMsgQue(msg);
+    hsmsSender->InsertMsgQue(msg, true);
 }
 
 
@@ -36,8 +34,10 @@ void HsmsClient::DisconnectToEquipment()
     if (TcpSocket->state() == QAbstractSocket::ConnectedState)
     {
         QByteArray msg = hsmsBuilder->MakeControlMsg(HsmsSType::DeselectReq);
-        hsmsSender->InsertMsgQue(msg);
+        hsmsSender->InsertMsgQue(msg, true);
         TcpSocket->close();
+
+        // T5 동안 Connect 불가
     }
 }
 
@@ -47,7 +47,7 @@ void HsmsClient::LinkTestToEquipment()
 
     QByteArray msg = hsmsBuilder->MakeControlMsg(HsmsSType::LinktestReq);
 
-    hsmsSender->InsertMsgQue(msg);
+    hsmsSender->InsertMsgQue(msg, true);
 }
 
 void HsmsClient::StateChange(QString State)
@@ -72,7 +72,7 @@ SmlMessage HsmsClient::SendSecsMsg(SmlMessage Msg)
     //A(길이) + B(헤더) + C(데이터) 영역 합치기
     packet.append(data_msg);
 
-    hsmsSender->InsertMsgQue(packet);
+    hsmsSender->InsertMsgQue(packet, Msg.wbit);
 
     return Msg;
 }
