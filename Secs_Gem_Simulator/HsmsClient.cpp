@@ -84,7 +84,7 @@ SmlMessage HsmsClient::SendSecsMsg(SmlMessage Msg)
 {
     //데이터 만들기
     QByteArray data_msg = hsmsBuilder->buildBodyFromSml(Msg.fullText);
-    if (data_msg == "")
+    if (data_msg == "FORMAT ERROR")
     {
         Logger::instance()->getLog("[ERROR][SML PARSE] Invalid SML format - data format mismatch(offset overflow)");
         return SmlMessage();

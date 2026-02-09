@@ -48,10 +48,11 @@ QString MsgToSecsMsg::handleDataMessage(const HsmsHeader& h, const QByteArray& b
     QString secsTree = QString();
 
     if (body.size() >= 5)
+    {
         secsTree = dumpSecs(body);
-
-    if (secsTree.isEmpty())
-        return secsTree;
+        if (secsTree.isEmpty())
+            return secsTree;
+    }
     
     QString ret = "\n[HSMS][DATA]\n" + header + "\n" + secsTree;
     return ret;

@@ -193,7 +193,7 @@ QByteArray HsmsBuilder::buildBodyFromSml(const QString& fullText)
 
             if (type == 0x00)
             {
-                return "";
+                return "FORMAT ERROR";
             }
 
             body.append(char(type));
@@ -274,7 +274,6 @@ QByteArray HsmsBuilder::MakeDataHeader(const SmlMessage& Msg, const int &length)
     // ---------------------------------
     // Length (4 bytes, Big Endian)
     // HSMS Header = 10 bytes
-    // Body ¾øÀ½
     // ---------------------------------
     quint32 data_length = static_cast<quint32>(length) + 10;
 
