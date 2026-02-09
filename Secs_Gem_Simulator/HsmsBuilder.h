@@ -1,8 +1,10 @@
 #pragma once
 
 #include <QtCore/QObject>
+
 #include "HsmsEnums.h"
 #include "SecsType.h"
+#include "SettingManager.h"
 
 class HsmsBuilder {
 
@@ -17,6 +19,10 @@ public:
 private:
     std::vector<QString> ParserData(const QString& bodyText);
     int getLength(const QString& type);
+
+    QString extractBody(const QString& fullText);
+    uint16_t getDeviceID();
+    uint8_t secsTypeToByte(const QString& type);
 
 private:
     quint32 systemByte = 0x00;

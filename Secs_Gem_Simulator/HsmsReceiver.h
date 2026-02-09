@@ -20,7 +20,7 @@ private:
     ISocket* socket;
 
 signals:
-    void setValue(QString State);
+    void setValue(const ConnectionState State);
 
 private slots:
     void onReadyRead();

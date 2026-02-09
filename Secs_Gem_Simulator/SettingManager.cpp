@@ -29,13 +29,27 @@ void SettingManager::setAllTimeOut(int T3, int T5, int T6, int T7, int T8)
 	this->T8 = T8;
 }
 
-void SettingManager::setTimeOut(QString name, int T)
+void SettingManager::setNetWork(const QString& IP, int Port, int DeviceID)
 {
-	if (name == "T3")		this->T3 = T;
-	else if (name == "T5")	this->T5 = T;
-	else if (name == "T6")	this->T6 = T;
-	else if (name == "T7")	this->T7 = T;
-	else if (name == "T8")	this->T8 = T;
+    this->IP = IP;
+    this->Port = Port;
+    this->DeviceID = DeviceID;
+}
+
+void SettingManager::SetParameter(const QString& name, int value)
+{
+    if (name == "T3")               this->T3 = value;
+    else if (name == "T5")          this->T5 = value;
+    else if (name == "T6")          this->T6 = value;
+    else if (name == "T7")          this->T7 = value;
+    else if (name == "T8")          this->T8 = value;
+    else if (name == "Port")        this->Port = value;
+    else if (name == "DeviceID")   this->DeviceID = value;
+}
+
+void SettingManager::SetParameter(const QString& name, const QString& value)
+{
+    if (name == "IP")               this->IP = value;
 }
 
 QString SettingManager::getCtrlType(const quint32& Stype)

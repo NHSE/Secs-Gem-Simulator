@@ -13,7 +13,7 @@ HsmsBuilder::~HsmsBuilder()
 
 }
 
-QString extractBody(const QString& fullText)
+QString HsmsBuilder::extractBody(const QString& fullText)
 {
     int start = fullText.indexOf('<');
     int end = fullText.lastIndexOf('>');
@@ -24,7 +24,14 @@ QString extractBody(const QString& fullText)
     return fullText.mid(start, end - start + 1);
 }
 
-uint8_t secsTypeToByte(const QString& type)
+uint16_t HsmsBuilder::getDeviceID()
+{
+    int value = SettingManager::instance()->DeviceID;
+
+    return static_cast<uint16_t>(value);
+}
+
+uint8_t HsmsBuilder::secsTypeToByte(const QString & type)
 {
     if (type == "L")        return 0x01;
 
@@ -47,7 +54,7 @@ uint8_t secsTypeToByte(const QString& type)
     if (type == "F4")       return 0x91;
     if (type == "F8")       return 0x81;
 
-    return 0x01; // unknown
+    return 0x00; // unknown
 }
 
 std::vector<QString> HsmsBuilder::ParserData(const QString& bodyText)
@@ -148,8 +155,6 @@ QByteArray HsmsBuilder::buildBodyFromSml(const QString& fullText)
 
             body.append(char(type));
             body.append(char(data[++index].toInt()));
-
-
         }
         else if (data[index] == "B")
         {
@@ -185,6 +190,11 @@ QByteArray HsmsBuilder::buildBodyFromSml(const QString& fullText)
         else
         {
             uint8_t type = secsTypeToByte(data[index]);
+
+            if (type == 0x00)
+            {
+                return "";
+            }
 
             body.append(char(type));
             
@@ -235,7 +245,9 @@ QByteArray HsmsBuilder::MakeControlMsg(const HsmsSType& type)
     packet.append(char(0x0A));
 
     // HSMS Header
-    packet.append(char(0x00)); packet.append(char(0x00));               // Device ID
+    uint16_t DeviceID = getDeviceID();
+    packet.append(static_cast<char>((DeviceID >> 8) & 0xFF));            // Device ID
+    packet.append(static_cast<char>(DeviceID & 0xFF));
 
     packet.append(char(0x00));                                          // Stream + W
 
@@ -275,9 +287,10 @@ QByteArray HsmsBuilder::MakeDataHeader(const SmlMessage& Msg, const int &length)
     // HSMS Header (10 bytes)
     // ---------------------------------
 
-    // Device ID (юс╫ц 0x0000)
-    packet.append(char(0x00));
-    packet.append(char(0x01));
+    // Device ID
+    uint16_t DeviceID = getDeviceID();
+    packet.append(static_cast<char>((DeviceID >> 8) & 0xFF));
+    packet.append(static_cast<char>(DeviceID & 0xFF));
 
     // Stream + W-bit
     quint8 streamByte = Msg.stream & 0x7F;

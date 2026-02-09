@@ -21,8 +21,8 @@ QString MsgToSecsMsg::onMessage(const QByteArray& msg)
     if (h.sType != 0x00)
         return handleControlMessage(h);
     
-
-    return handleDataMessage(h, msg.mid(10));
+    QString ret = handleDataMessage(h, msg.mid(10));
+    return ret;
 }
 
 HsmsHeader MsgToSecsMsg::parseHeader(const QByteArray& data)
@@ -50,6 +50,8 @@ QString MsgToSecsMsg::handleDataMessage(const HsmsHeader& h, const QByteArray& b
     if (body.size() >= 5)
         secsTree = dumpSecs(body);
 
+    if (secsTree.isEmpty())
+        return secsTree;
     
     QString ret = "\n[HSMS][DATA]\n" + header + "\n" + secsTree;
     return ret;
@@ -128,6 +130,9 @@ int MsgToSecsMsg::parseLength(const QByteArray& data, int& offset, int lenBytes)
 
 QString MsgToSecsMsg::parseItem(const QByteArray& data, int& offset, int depth)
 {
+    if (offset >= data.size())
+        return QString();
+
     QString indent(depth * 2, ' ');
     quint8 first = quint8(data[offset++]);
 
@@ -140,7 +145,10 @@ QString MsgToSecsMsg::parseItem(const QByteArray& data, int& offset, int depth)
     if (type == SecsType::L) {
         out += QString("%1<L[%2]\n").arg(indent).arg(length);
         for (int i = 0; i < length; ++i) {
-            out += parseItem(data, offset, depth + 1);
+            QString msg = parseItem(data, offset, depth + 1);
+            if (msg.isEmpty()) return QString();
+
+            out += msg;
         }
         out += QString("%1>\n").arg(indent);
         return out;

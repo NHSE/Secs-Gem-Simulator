@@ -25,7 +25,10 @@ public:
     SettingManager& operator=(const SettingManager&) = delete;
 
     void setAllTimeOut(int T3, int T5, int T6, int T7, int T8);
-    void setTimeOut(QString name, int T);
+    void setNetWork(const QString& IP, int Port, int DeviceID);
+
+    void SetParameter(const QString& name, int value);
+    void SetParameter(const QString& name, const QString& value);
 
     void startT3(quint32 systemByte, const QByteArray& sentMsg);
     void stopT3(quint32 systemByte);
@@ -34,7 +37,8 @@ public:
     void stopT6(quint32 systemByte);
 
 public:
-    int T3, T5, T6, T7, T8;
+    int T3, T5, T6, T7, T8, Port, DeviceID;
+    QString IP;
 
 private:
     QMap<quint32, Context> t3Map;

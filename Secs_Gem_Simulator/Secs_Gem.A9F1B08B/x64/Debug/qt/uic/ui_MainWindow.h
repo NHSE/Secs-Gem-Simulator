@@ -20,10 +20,9 @@
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenuBar>
 #include <QtWidgets/QPushButton>
+#include <QtWidgets/QRadioButton>
 #include <QtWidgets/QScrollArea>
 #include <QtWidgets/QStatusBar>
-#include <QtWidgets/QTabWidget>
-#include <QtWidgets/QTextBrowser>
 #include <QtWidgets/QTextEdit>
 #include <QtWidgets/QToolBar>
 #include <QtWidgets/QVBoxLayout>
@@ -40,40 +39,32 @@ public:
     QVBoxLayout *verticalLayout_2;
     QFrame *frame_6;
     QHBoxLayout *horizontalLayout_6;
-    QLabel *lb_State;
-    QTextEdit *textEdit_2;
-    QTextEdit *textEdit;
-    QTextEdit *textEdit_3;
+    QRadioButton *rbtn_State;
     QFrame *frame_7;
     QHBoxLayout *horizontalLayout_4;
-    QTabWidget *tabWidget;
-    QWidget *tab;
-    QHBoxLayout *horizontalLayout_2;
     QScrollArea *scrollArea;
     QWidget *scrollAreaWidgetContents;
     QHBoxLayout *horizontalLayout_7;
     QTextEdit *tb_SecsMsg;
-    QWidget *tab_2;
-    QHBoxLayout *horizontalLayout_3;
-    QTextBrowser *textBrowser_2;
     QFrame *frame;
     QVBoxLayout *verticalLayout;
     QFrame *frame_2;
     QFormLayout *formLayout;
-    QLabel *label;
     QPushButton *btnConnect;
     QPushButton *btnDisConnect;
+    QLabel *label;
     QFrame *frame_3;
     QGridLayout *gridLayout;
-    QPushButton *btnOpen;
+    QPushButton *btnLinkTest;
     QListWidget *lw_MsgList;
     QPushButton *btnClos;
-    QPushButton *btnLinkTest;
+    QPushButton *btnOpen;
+    QLabel *label_2;
     QMenuBar *menuBar;
     QToolBar *mainToolBar;
     QStatusBar *statusBar;
-    QToolBar *toolBar;
     QToolBar *toolBar_2;
+    QToolBar *toolBar;
 
     void setupUi(QMainWindow *Secs_Gem_SimulatorClass)
     {
@@ -99,57 +90,37 @@ public:
         frame_6 = new QFrame(frame_4);
         frame_6->setObjectName(QString::fromUtf8("frame_6"));
         frame_6->setMaximumSize(QSize(16777215, 50));
-        frame_6->setFrameShape(QFrame::StyledPanel);
-        frame_6->setFrameShadow(QFrame::Raised);
+        frame_6->setFrameShape(QFrame::Box);
+        frame_6->setFrameShadow(QFrame::Sunken);
         horizontalLayout_6 = new QHBoxLayout(frame_6);
         horizontalLayout_6->setSpacing(6);
         horizontalLayout_6->setContentsMargins(11, 11, 11, 11);
         horizontalLayout_6->setObjectName(QString::fromUtf8("horizontalLayout_6"));
-        lb_State = new QLabel(frame_6);
-        lb_State->setObjectName(QString::fromUtf8("lb_State"));
+        rbtn_State = new QRadioButton(frame_6);
+        rbtn_State->setObjectName(QString::fromUtf8("rbtn_State"));
+        rbtn_State->setEnabled(true);
 
-        horizontalLayout_6->addWidget(lb_State);
-
-        textEdit_2 = new QTextEdit(frame_6);
-        textEdit_2->setObjectName(QString::fromUtf8("textEdit_2"));
-
-        horizontalLayout_6->addWidget(textEdit_2);
-
-        textEdit = new QTextEdit(frame_6);
-        textEdit->setObjectName(QString::fromUtf8("textEdit"));
-
-        horizontalLayout_6->addWidget(textEdit);
-
-        textEdit_3 = new QTextEdit(frame_6);
-        textEdit_3->setObjectName(QString::fromUtf8("textEdit_3"));
-
-        horizontalLayout_6->addWidget(textEdit_3);
+        horizontalLayout_6->addWidget(rbtn_State);
 
 
         verticalLayout_2->addWidget(frame_6);
 
         frame_7 = new QFrame(frame_4);
         frame_7->setObjectName(QString::fromUtf8("frame_7"));
-        frame_7->setFrameShape(QFrame::StyledPanel);
-        frame_7->setFrameShadow(QFrame::Raised);
+        frame_7->setFrameShape(QFrame::Box);
+        frame_7->setFrameShadow(QFrame::Sunken);
         horizontalLayout_4 = new QHBoxLayout(frame_7);
         horizontalLayout_4->setSpacing(6);
         horizontalLayout_4->setContentsMargins(11, 11, 11, 11);
         horizontalLayout_4->setObjectName(QString::fromUtf8("horizontalLayout_4"));
-        tabWidget = new QTabWidget(frame_7);
-        tabWidget->setObjectName(QString::fromUtf8("tabWidget"));
-        tab = new QWidget();
-        tab->setObjectName(QString::fromUtf8("tab"));
-        horizontalLayout_2 = new QHBoxLayout(tab);
-        horizontalLayout_2->setSpacing(6);
-        horizontalLayout_2->setContentsMargins(11, 11, 11, 11);
-        horizontalLayout_2->setObjectName(QString::fromUtf8("horizontalLayout_2"));
-        scrollArea = new QScrollArea(tab);
+        scrollArea = new QScrollArea(frame_7);
         scrollArea->setObjectName(QString::fromUtf8("scrollArea"));
+        scrollArea->setMinimumSize(QSize(300, 0));
+        scrollArea->setFrameShape(QFrame::Box);
         scrollArea->setWidgetResizable(true);
         scrollAreaWidgetContents = new QWidget();
         scrollAreaWidgetContents->setObjectName(QString::fromUtf8("scrollAreaWidgetContents"));
-        scrollAreaWidgetContents->setGeometry(QRect(0, 0, 274, 311));
+        scrollAreaWidgetContents->setGeometry(QRect(0, 0, 296, 361));
         horizontalLayout_7 = new QHBoxLayout(scrollAreaWidgetContents);
         horizontalLayout_7->setSpacing(6);
         horizontalLayout_7->setContentsMargins(11, 11, 11, 11);
@@ -161,28 +132,12 @@ public:
 
         scrollArea->setWidget(scrollAreaWidgetContents);
 
-        horizontalLayout_2->addWidget(scrollArea);
-
-        tabWidget->addTab(tab, QString());
-        tab_2 = new QWidget();
-        tab_2->setObjectName(QString::fromUtf8("tab_2"));
-        horizontalLayout_3 = new QHBoxLayout(tab_2);
-        horizontalLayout_3->setSpacing(6);
-        horizontalLayout_3->setContentsMargins(11, 11, 11, 11);
-        horizontalLayout_3->setObjectName(QString::fromUtf8("horizontalLayout_3"));
-        textBrowser_2 = new QTextBrowser(tab_2);
-        textBrowser_2->setObjectName(QString::fromUtf8("textBrowser_2"));
-
-        horizontalLayout_3->addWidget(textBrowser_2);
-
-        tabWidget->addTab(tab_2, QString());
-
-        horizontalLayout_4->addWidget(tabWidget);
+        horizontalLayout_4->addWidget(scrollArea);
 
         frame = new QFrame(frame_7);
         frame->setObjectName(QString::fromUtf8("frame"));
-        frame->setFrameShape(QFrame::StyledPanel);
-        frame->setFrameShadow(QFrame::Raised);
+        frame->setFrameShape(QFrame::Box);
+        frame->setFrameShadow(QFrame::Sunken);
         verticalLayout = new QVBoxLayout(frame);
         verticalLayout->setSpacing(6);
         verticalLayout->setContentsMargins(11, 11, 11, 11);
@@ -190,19 +145,16 @@ public:
         frame_2 = new QFrame(frame);
         frame_2->setObjectName(QString::fromUtf8("frame_2"));
         frame_2->setMaximumSize(QSize(215, 60));
-        frame_2->setFrameShape(QFrame::StyledPanel);
-        frame_2->setFrameShadow(QFrame::Raised);
+        frame_2->setFrameShape(QFrame::Box);
+        frame_2->setFrameShadow(QFrame::Sunken);
         formLayout = new QFormLayout(frame_2);
         formLayout->setSpacing(6);
         formLayout->setContentsMargins(11, 11, 11, 11);
         formLayout->setObjectName(QString::fromUtf8("formLayout"));
-        label = new QLabel(frame_2);
-        label->setObjectName(QString::fromUtf8("label"));
-
-        formLayout->setWidget(0, QFormLayout::LabelRole, label);
-
         btnConnect = new QPushButton(frame_2);
         btnConnect->setObjectName(QString::fromUtf8("btnConnect"));
+        btnConnect->setMinimumSize(QSize(0, 20));
+        btnConnect->setMaximumSize(QSize(100, 16777215));
         QFont font;
         btnConnect->setFont(font);
 
@@ -210,40 +162,54 @@ public:
 
         btnDisConnect = new QPushButton(frame_2);
         btnDisConnect->setObjectName(QString::fromUtf8("btnDisConnect"));
+        btnDisConnect->setMinimumSize(QSize(0, 20));
+        btnDisConnect->setMaximumSize(QSize(100, 16777215));
         btnDisConnect->setFont(font);
 
         formLayout->setWidget(1, QFormLayout::FieldRole, btnDisConnect);
+
+        label = new QLabel(frame_2);
+        label->setObjectName(QString::fromUtf8("label"));
+
+        formLayout->setWidget(0, QFormLayout::LabelRole, label);
 
 
         verticalLayout->addWidget(frame_2);
 
         frame_3 = new QFrame(frame);
         frame_3->setObjectName(QString::fromUtf8("frame_3"));
-        frame_3->setFrameShape(QFrame::StyledPanel);
-        frame_3->setFrameShadow(QFrame::Raised);
+        frame_3->setFrameShape(QFrame::Box);
+        frame_3->setFrameShadow(QFrame::Sunken);
         gridLayout = new QGridLayout(frame_3);
         gridLayout->setSpacing(6);
         gridLayout->setContentsMargins(11, 11, 11, 11);
         gridLayout->setObjectName(QString::fromUtf8("gridLayout"));
-        btnOpen = new QPushButton(frame_3);
-        btnOpen->setObjectName(QString::fromUtf8("btnOpen"));
+        btnLinkTest = new QPushButton(frame_3);
+        btnLinkTest->setObjectName(QString::fromUtf8("btnLinkTest"));
 
-        gridLayout->addWidget(btnOpen, 0, 0, 1, 1);
+        gridLayout->addWidget(btnLinkTest, 3, 1, 1, 1);
 
         lw_MsgList = new QListWidget(frame_3);
         lw_MsgList->setObjectName(QString::fromUtf8("lw_MsgList"));
 
-        gridLayout->addWidget(lw_MsgList, 1, 0, 1, 2);
+        gridLayout->addWidget(lw_MsgList, 2, 0, 1, 2);
 
         btnClos = new QPushButton(frame_3);
         btnClos->setObjectName(QString::fromUtf8("btnClos"));
+        btnClos->setMaximumSize(QSize(90, 16777215));
 
-        gridLayout->addWidget(btnClos, 0, 1, 1, 1);
+        gridLayout->addWidget(btnClos, 1, 1, 1, 1);
 
-        btnLinkTest = new QPushButton(frame_3);
-        btnLinkTest->setObjectName(QString::fromUtf8("btnLinkTest"));
+        btnOpen = new QPushButton(frame_3);
+        btnOpen->setObjectName(QString::fromUtf8("btnOpen"));
+        btnOpen->setMaximumSize(QSize(90, 16777215));
 
-        gridLayout->addWidget(btnLinkTest, 2, 1, 1, 1);
+        gridLayout->addWidget(btnOpen, 1, 0, 1, 1);
+
+        label_2 = new QLabel(frame_3);
+        label_2->setObjectName(QString::fromUtf8("label_2"));
+
+        gridLayout->addWidget(label_2, 0, 0, 1, 1);
 
 
         verticalLayout->addWidget(frame_3);
@@ -271,17 +237,14 @@ public:
         statusBar = new QStatusBar(Secs_Gem_SimulatorClass);
         statusBar->setObjectName(QString::fromUtf8("statusBar"));
         Secs_Gem_SimulatorClass->setStatusBar(statusBar);
-        toolBar = new QToolBar(Secs_Gem_SimulatorClass);
-        toolBar->setObjectName(QString::fromUtf8("toolBar"));
-        Secs_Gem_SimulatorClass->addToolBar(Qt::TopToolBarArea, toolBar);
         toolBar_2 = new QToolBar(Secs_Gem_SimulatorClass);
         toolBar_2->setObjectName(QString::fromUtf8("toolBar_2"));
         Secs_Gem_SimulatorClass->addToolBar(Qt::TopToolBarArea, toolBar_2);
+        toolBar = new QToolBar(Secs_Gem_SimulatorClass);
+        toolBar->setObjectName(QString::fromUtf8("toolBar"));
+        Secs_Gem_SimulatorClass->addToolBar(Qt::TopToolBarArea, toolBar);
 
         retranslateUi(Secs_Gem_SimulatorClass);
-
-        tabWidget->setCurrentIndex(0);
-
 
         QMetaObject::connectSlotsByName(Secs_Gem_SimulatorClass);
     } // setupUi
@@ -289,17 +252,16 @@ public:
     void retranslateUi(QMainWindow *Secs_Gem_SimulatorClass)
     {
         Secs_Gem_SimulatorClass->setWindowTitle(QApplication::translate("Secs_Gem_SimulatorClass", "Secs_Gem_Simulator", nullptr));
-        lb_State->setText(QApplication::translate("Secs_Gem_SimulatorClass", "Not Connect", nullptr));
-        tabWidget->setTabText(tabWidget->indexOf(tab), QApplication::translate("Secs_Gem_SimulatorClass", "Tab 1", nullptr));
-        tabWidget->setTabText(tabWidget->indexOf(tab_2), QApplication::translate("Secs_Gem_SimulatorClass", "Tab 2", nullptr));
-        label->setText(QApplication::translate("Secs_Gem_SimulatorClass", "Connect", nullptr));
+        rbtn_State->setText(QApplication::translate("Secs_Gem_SimulatorClass", "Not Connect", nullptr));
         btnConnect->setText(QApplication::translate("Secs_Gem_SimulatorClass", "Connect", nullptr));
         btnDisConnect->setText(QApplication::translate("Secs_Gem_SimulatorClass", "DisConnect", nullptr));
-        btnOpen->setText(QApplication::translate("Secs_Gem_SimulatorClass", "Open", nullptr));
-        btnClos->setText(QApplication::translate("Secs_Gem_SimulatorClass", "Close", nullptr));
+        label->setText(QApplication::translate("Secs_Gem_SimulatorClass", "Connect", nullptr));
         btnLinkTest->setText(QApplication::translate("Secs_Gem_SimulatorClass", "LinkTest", nullptr));
-        toolBar->setWindowTitle(QApplication::translate("Secs_Gem_SimulatorClass", "toolBar", nullptr));
+        btnClos->setText(QApplication::translate("Secs_Gem_SimulatorClass", "Close", nullptr));
+        btnOpen->setText(QApplication::translate("Secs_Gem_SimulatorClass", "Open", nullptr));
+        label_2->setText(QApplication::translate("Secs_Gem_SimulatorClass", "File", nullptr));
         toolBar_2->setWindowTitle(QApplication::translate("Secs_Gem_SimulatorClass", "toolBar_2", nullptr));
+        toolBar->setWindowTitle(QApplication::translate("Secs_Gem_SimulatorClass", "toolBar", nullptr));
     } // retranslateUi
 
 };

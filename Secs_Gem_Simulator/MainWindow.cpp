@@ -20,7 +20,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui.btnOpen, SIGNAL(clicked()), this, SLOT(btnOpen_Clicked()));
     connect(ui.btnClos, SIGNAL(clicked()), this, SLOT(btnClose_Clicked()));
 
-    connect(hsmsClient, SIGNAL(setValue(QString)), this, SLOT(SetConnectState(QString)));
+    connect(hsmsClient, SIGNAL(setValue(ConnectionState)), this, SLOT(SetConnectState(ConnectionState)));
     connect(Logger::instance(), SIGNAL(sendLog(QString)), this, SLOT(Logging_SecsMsg(QString)));
 
     ui.lw_MsgList->setContextMenuPolicy(Qt::CustomContextMenu);
@@ -73,9 +73,20 @@ void MainWindow::btnClose_Clicked()
     ui.lw_MsgList->clear();
 }
 
-void MainWindow::SetConnectState(QString State)
+void MainWindow::SetConnectState(const ConnectionState State)
 {
-    ui.lb_State->setText(State);
+    QString state;
+    switch (State)
+    {
+    case ConnectionState::Connected:
+        state = "Connect";
+        break;
+    case ConnectionState::Disconnected:
+        state = "Disconnect";
+        break;
+    }
+
+    ui.rbtn_State->setText(state);
 }
 
 void MainWindow::Logging_SecsMsg(QString Msg)

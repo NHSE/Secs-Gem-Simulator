@@ -36,8 +36,15 @@ void HsmsSender::process()
         data = MsgQue.dequeue();
     }
 
-    socket->write(data);
-
-    Logger::instance()->getLog(MsgToSecsMsg::instance()->onMessage(data.msg));
+    QString msg = MsgToSecsMsg::instance()->onMessage(data.msg);
+    if (msg.isEmpty())
+    {
+        Logger::instance()->getLog("[ERROR][SML PARSE] Invalid SML format - data length mismatch (offset overflow)");
+    }
+    else
+    {
+        socket->write(data);
+        Logger::instance()->getLog(MsgToSecsMsg::instance()->onMessage(data.msg));
+    }
 }
 

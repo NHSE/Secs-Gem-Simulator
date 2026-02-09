@@ -33,7 +33,7 @@ private slots :
     void btnOpen_Clicked();
     void btnClose_Clicked();
 
-    void SetConnectState(QString State);
+    void SetConnectState(const ConnectionState State);
     void Logging_SecsMsg(QString Msg);
     void onListContextMenu(const QPoint& pos);
     void onShowSml();

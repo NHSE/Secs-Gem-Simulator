@@ -10,10 +10,14 @@ HsmsClient::HsmsClient(QObject* parent)
     hsmsSender = new HsmsSender(hsmsAdapter);
     hsmsReceiver = new HsmsReceiver(hsmsAdapter);
 
-    connect(hsmsSender, SIGNAL(setValue(QString)), this, SLOT(StateChange(QString)));
-    connect(TcpSocket, SIGNAL(&QTcpSocket::errorOccurred), this, SLOT(onSocketError));
-    connect(TcpSocket, SIGNAL(readyRead()), hsmsReceiver, SLOT(onReadyRead()));
     connect(hsmsSender, &HsmsSender::sendNext, hsmsSender, &HsmsSender::process, Qt::QueuedConnection);
+    connect(hsmsReceiver, SIGNAL(setValue(ConnectionState)), this, SLOT(StateChange(ConnectionState)));
+
+    connect(TcpSocket, SIGNAL(errorOccurred(QAbstractSocket::SocketError)), this, SLOT(onSocketError(QAbstractSocket::SocketError)));
+    connect(TcpSocket, SIGNAL(readyRead()), hsmsReceiver, SLOT(onReadyRead()));
+    connect(TcpSocket, SIGNAL(connected()), this, SLOT(onConnected()));
+    connect(TcpSocket, SIGNAL(disconnected()), this, SLOT(onDisconnected()));
+
 }
 
 HsmsClient::~HsmsClient()
@@ -23,9 +27,9 @@ void HsmsClient::connectToEquipment()
 {
     if (TcpSocket->state() == QAbstractSocket::ConnectedState)   return;
 
-    TcpSocket->connectToHost(QHostAddress("127.0.0.1"), 5000);
-    QByteArray msg = hsmsBuilder->MakeControlMsg(HsmsSType::SelectReq);
-    hsmsSender->InsertMsgQue(msg, true);
+    QString IP = SettingManager::instance()->IP;
+    int Port = SettingManager::instance()->Port;
+    TcpSocket->connectToHost(QHostAddress(IP), Port);
 }
 
 
@@ -50,20 +54,42 @@ void HsmsClient::LinkTestToEquipment()
     hsmsSender->InsertMsgQue(msg, true);
 }
 
-void HsmsClient::StateChange(QString State)
+void HsmsClient::StateChange(const ConnectionState State)
 {
     emit setValue(State);
 }
 
+void HsmsClient::onConnected()
+{
+    QByteArray msg = hsmsBuilder->MakeControlMsg(HsmsSType::SelectReq);
+    hsmsSender->InsertMsgQue(msg, true);
+}
+
+void HsmsClient::onDisconnected()
+{
+    Logger::instance()->getLog("TCP Disconnected");
+
+    emit setValue(ConnectionState::Disconnected);
+}
+
 void HsmsClient::onSocketError(QAbstractSocket::SocketError error)
 {
+    QString error_log = QString("[TCP][ERROR] %1 %2").arg(error).arg(TcpSocket->errorString());
+    Logger::instance()->getLog(error_log);
 
+    emit setValue(ConnectionState::Disconnected);
 }
 
 SmlMessage HsmsClient::SendSecsMsg(SmlMessage Msg)
 {
     //데이터 만들기
     QByteArray data_msg = hsmsBuilder->buildBodyFromSml(Msg.fullText);
+    if (data_msg == "")
+    {
+        Logger::instance()->getLog("[ERROR][SML PARSE] Invalid SML format - data format mismatch(offset overflow)");
+        return SmlMessage();
+    }
+
     int length = data_msg.length();
 
     //길이 + 헤더 만들기

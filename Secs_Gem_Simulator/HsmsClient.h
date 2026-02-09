@@ -7,6 +7,7 @@
 #include "HsmsSender.h"
 #include "HsmsAdapter.h"
 #include "HsmsReceiver.h"
+#include "Logger.h"
 
 class HsmsClient : public QObject {
     Q_OBJECT
@@ -26,13 +27,16 @@ private:
     QTcpSocket* TcpSocket;
 
 signals:
-    void setValue(QString State);
+    void setValue(const ConnectionState State);
 
 public slots:
     void connectToEquipment();
     void DisconnectToEquipment();
     void LinkTestToEquipment();
 
-    void StateChange(QString State);
+    void StateChange(const ConnectionState State);
+
+    void onConnected();
+    void onDisconnected();
     void onSocketError(QAbstractSocket::SocketError error);
 };
