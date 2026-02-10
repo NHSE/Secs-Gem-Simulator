@@ -25,16 +25,14 @@ SECS-II 메시지 송수신, 타이머 관리, 메시지 파싱 기능을 제공
 본 프로젝트는 **SECS/GEM 표준 통신 구조 학습 및 실습**을 목적으로 개발한  
 SECS/GEM Host 시뮬레이터입니다.
 
-HSMS 통신 구조를 기반으로 TCP/IP 연결, Control / Data Message 구분,  
-SECS-II 메시지 파싱 및 Time Out 기능을 직접 구현하였습니다.
+HSMS 통신 구조를 기반으로 TCP/IP 연결, Control / Data Message 구분, SECS-II 메시지 파싱 및 Time Out 기능을 직접 구현하였습니다.
 
 ---
 
 ## 🎯 목적
 
-- **SECS/GEM 표준 통신 구조 이해**
-- **C++ / Qt 비동기 통신 설계 실습**
-- **반도체 장비 통신 소프트웨어 직무 대비**
+- **글로벌 표준 통신 구조 이해**
+- **반도체 장비 소프트웨어 직무 대비**
 - **HSMS 프로토콜 기반 설계 경험 축적**
 
 ---
@@ -53,8 +51,8 @@ SECS-II 메시지 파싱 및 Time Out 기능을 직접 구현하였습니다.
 
 ## 📘 HSMS 개요
 
-**HSMS** (High-Speed SECS Message Services)는 SEMI E37 표준 기반의 프로토콜로,  
-Ethernet 기반에서 반도체 장비와 Host 간 SECS 메시지를 주고받기 위한 통신 규약입니다.  
+**HSMS** (High-Speed SECS Message Services)는 SEMI E37 표준 기반의 프로토콜로, Ethernet 기반에서 반도체 장비와 Host 간 SECS 메시지를 주고받기 위한 통신 규약입니다.
+
 기존의 시리얼(SECS-I) 방식보다 **속도・신뢰성・다중 장비 지원** 측면에서 우수합니다.
 
 ### HSMS 메시지 구조
@@ -133,10 +131,9 @@ v1.0.0 : [다운로드](https://github.com/NHSE/Secs-Gem-Simulator/releases/tag/
 
 
 ## 📡 SECS/GEM 프로그램 사용 방법
-- [프로그램 실행 환경 설정](docs/GETTING_STARTED.md)
-- [프로그램 사용 방법](docs/GETTING_STARTED.md)
-- [SECS/GEM SML 파일 형식](docs/GETTING_STARTED.md)
-- [프로그램 설계 방식](docs/GETTING_STARTED.md)
+- [프로그램 실행 환경 설정 및 사용 방법](docs/SETUP.md)
+- [SECS/GEM SML 파일 형식](docs/SML_FORMAT.md)
+- [프로그램 설계 방식](docs/ARCHITECTURE.md)
 
 ## 💻 개발 환경
 
