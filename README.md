@@ -15,7 +15,7 @@ SECS-II 메시지 송수신, 타이머 관리, 메시지 파싱 기능을 제공
 - [목적](#-목적)
 - [주요 기능](#-주요-기능)
 - [HSMS 개요](#-hsms-개요)
-- [사용 방법](#-사용-방법)
+- [다운로드](#-다운로드)
 - [개발 환경](#-개발-환경)
 
 ---
@@ -127,36 +127,28 @@ Time Out이란 일정 시간 내 응답이 없을 경우, 시스템이 비정상
 
 ---
 
-## 🛠 사용 방법
+## 🛠 다운로드
 
-### 1. 저장소 Clone
+v1.0.0 : [다운로드](https://github.com/NHSE/Secs-Gem-Simulator/releases/tag/v1.0.0)
 
-```bash
-git clone https://github.com/NHSE/SECS-GEM-Host-Simulator.git
 
-빌드 및 실행
-```
-
-## 2. 📡 SECS/GEM 프로그램 사용 방법
-
-- 프로그램 실행 환경 설정(docs/GETTING_STARTED.md)
-
-- 프로그램 사용 방법(docs/GETTING_STARTED.md)
-
-- SECS/GEM SML 파일 형식(docs/GETTING_STARTED.md)
-
-- 프로그램 설계 방식(docs/GETTING_STARTED.md)
+## 📡 SECS/GEM 프로그램 사용 방법
+- [프로그램 실행 환경 설정](docs/GETTING_STARTED.md)
+- [프로그램 사용 방법](docs/GETTING_STARTED.md)
+- [SECS/GEM SML 파일 형식](docs/GETTING_STARTED.md)
+- [프로그램 설계 방식](docs/GETTING_STARTED.md)
 
 ## 💻 개발 환경
+
 Language : C++
 
 Framework : Qt
 
 OS : Windows
 
-Protocol : SECS-II / HSMS-SS
-
 📬 개발자
 Author : NHSE
+
 GitHub : https://github.com/NHSE
+
 Email : abcd2205@naver.com
